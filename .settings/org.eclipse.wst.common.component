@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="feed">
+        <wb-resource deploy-path="/" source-path="/target/generated"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/" source-path="/src/main/scripts"/>
+        <wb-resource deploy-path="/" source-path="/src/main/config"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <property name="context-root" value="feed"/>
+        <property name="java-output-path" value="/feed/target/classes"/>
+    </wb-module>
+</project-modules>

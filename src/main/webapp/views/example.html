@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="US-ASCII">
+<link rel="stylesheet" type="text/css" href="../assets/stylesheets/feed.css">
+<script type="text/javascript" src="../assets/javascripts/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../assets/javascripts/jquery-ui-1.10.3.custom.js"></script>
+<script type="text/javascript">
+	$(function() {
+	    $("#steps").sortable();
+    });
+</script>
+
+<title>Feed Example</title>
+</head>
+
+<body>
+
+<div id="recipe" class="recipe">
+
+<textarea id="title" class="title" required="required">Provide a concise name to identify your recipe</textarea>
+<textarea id="description" class="description">Provide a description or introduction.</textarea>
+
+<div>
+	<h2>List your ingredients one at a time:</h2>
+	<div id="ingredient-group-1" class="ingredient">
+		<label for="quantity-1">Quantity</label>
+		<input id="quantity-1" type="text" size="5"/>
+		<label for="measurement-1">Meausurement</label>
+		<select id="measurement-1">
+			<option>(none)</option>
+			<option>tablespoon</option>
+		</select>
+		<label for="item-text-1">Item</label>
+		<input id="item-text-1" type="text" size="40"/>
+	</div>
+</div>
+
+<div>
+	<h2>Add your instructions one at a time:</h2>
+	<div id="steps">
+	<!-- 
+	<li>Hello 1</li>
+	<li>Goodbye 2</li>
+	<li>Shiid</li>
+		<li><input type="text" class="step"/><button>X</button></li>
+		<li><input type="text" class="step"/><button>X</button></li>
+		<li><input type="text" class="step"/><button>X</button></li>
+	 -->
+	 	<p>One</p>
+	 	<p>Two</p>
+	 	<p>Three</p>
+	</div>
+</div>
+
+<div>
+	<button>save</button>
+	<button>publish</button>
+</div>
+
+</div>
+
+
+</body>
+</html>
