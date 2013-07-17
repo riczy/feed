@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * </p> 
  */
 @Entity
-@Table(name="measurement_type")
+@Table(name="measurement")
 public class MeasurementType extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
