@@ -1,13 +1,14 @@
 var Feed = Feed || {};
-Feed.Measurement = Feed.Measurement || {};
+Feed.Model = Feed.Model || {};
 
-Feed.Measurement.Model = Backbone.Model.extend({
-	url: '/measurements'
+Feed.Model.Measurement = Backbone.Model.extend({
+	url: '/r/measurements'
 });
 
-Feed.Measurement.ModelCollection = Backbone.Collection.extend({
-	model: Feed.Measurement.Model,
-	url: '/measurements',
+Feed.Model.MeasurementList = Backbone.Collection.extend({
+	model: Feed.Model.Measurement,
+	url: '/r/measurements',
+	comparator: 'name',
 	initialize: function() {
 		// invoked upon creation; optional
 	}

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gima</groupId>
   <artifactId>feed</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>war</packaging>
   <name>Food Feed</name>
   <description>A personal recipe library</description>
@@ -56,7 +56,7 @@
       <plugin>
         <groupId>org.jboss.as.plugins</groupId>
         <artifactId>jboss-as-maven-plugin</artifactId>
-        <version>7.1.1.Final</version>
+        <version>7.4.Final</version>
         <configuration>
           <skip>false</skip>
         </configuration>

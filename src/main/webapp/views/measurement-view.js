@@ -1,13 +1,12 @@
 var Feed = Feed || {};
-Feed.Measurement = Feed.Measurement || {};
+Feed.View = Feed.View || {};
 
 /**
- * model	Feed.Measurement.Model
+ * model	Feed.Model.Measurement
  */
-Feed.Measurement.RowView = Backbone.View.extend({
+Feed.View.MeasurementRow = Backbone.View.extend({
 	tagName : 'tr',
-	//id : 'measurement-view',
-	//className : 'measurement',
+	// id: 'measurement-row-' + this.model.id,
 	events : {
 		"dblclick" : "edit"
 	},
@@ -21,18 +20,17 @@ Feed.Measurement.RowView = Backbone.View.extend({
 });
 
 /**
- * collection	Feed.Measurement.ModelCollection
+ * collection	Feed.Model.MeasurementList
  */
-Feed.Measurement.TableView = Backbone.View.extend({
+Feed.View.MeasurementTable = Backbone.View.extend({
 	tagName : 'table',
 	initialize : function() {
 		this.rows = [];
 	},
 	render : function() {
 		var html = '';
-		var rowView = null;
 		for (var i = 0; i < this.collection.length; i++) {
-			rowView = new Feed.Measurement.RowView({model: this.collection[i]});
+			var rowView = new Feed.View.MeasurementRow({model: this.collection[i]});
 			this.rows.push(rowView);
 			html += rowView.render();
 		}

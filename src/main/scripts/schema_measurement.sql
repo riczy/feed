@@ -3,9 +3,9 @@ USE feed;
 DROP TABLE measurement;
 
 CREATE  TABLE measurement (
-  id NUMERIC(20) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies this measurement type entry.',
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies this measurement type entry.',
   name VARCHAR(45) NOT NULL COMMENT 'A name that describes the measurement type.',
-  version NUMERIC(10) NOT NULL COMMENT 'The version of this entry to assist with oplocking capability.',
+  version MEDIUMINT NOT NULL COMMENT 'The version of this entry to assist with oplocking capability.',
   PRIMARY KEY (id) ,
   UNIQUE INDEX uidx_measurement_name (name ASC) );
 
