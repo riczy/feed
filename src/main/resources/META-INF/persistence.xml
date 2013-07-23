@@ -16,12 +16,13 @@
     	</properties>
     </persistence-unit>
 
-	<!-- HIBERNATE ORM / H2 -->
+	<!-- HIBERNATE ORM / H2 
 	<persistence-unit name="feed_H2">
     	<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
     	<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
     	</properties>
     </persistence-unit>
+	-->
     
 </persistence>

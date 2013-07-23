@@ -1,7 +1,7 @@
 package com.gima.feed.domain;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,10 +31,10 @@ public class Recipe extends AbstractEntity {
    
    @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
    //@XmlTransient
-   private List<RecipeIngredient> ingredients;
+   private Set<RecipeIngredient> ingredients;
    
    @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
-   private List<RecipeStep> steps;
+   private Set<RecipeStep> steps;
    
    @Temporal(TemporalType.TIMESTAMP)
    @Column(name="creationDate", nullable=false)
@@ -65,22 +65,22 @@ public class Recipe extends AbstractEntity {
    }
 
    
-   public List<RecipeIngredient> getIngredients() {
+   public Set<RecipeIngredient> getIngredients() {
       return ingredients;
    }
 
    
-   public void setIngredients(List<RecipeIngredient> ingredients) {
+   public void setIngredients(Set<RecipeIngredient> ingredients) {
       this.ingredients = ingredients;
    }
 
    
-   public List<RecipeStep> getSteps() {
+   public Set<RecipeStep> getSteps() {
       return steps;
    }
 
    
-   public void setSteps(List<RecipeStep> steps) {
+   public void setSteps(Set<RecipeStep> steps) {
       this.steps = steps;
    }
 

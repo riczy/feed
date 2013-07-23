@@ -32,7 +32,6 @@
   </dependencies>
   
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
       	<groupId>org.apache.maven.plugins</groupId>
@@ -57,9 +56,6 @@
         <groupId>org.jboss.as.plugins</groupId>
         <artifactId>jboss-as-maven-plugin</artifactId>
         <version>7.4.Final</version>
-        <configuration>
-          <skip>false</skip>
-        </configuration>
       </plugin>
     </plugins>
   </build>
