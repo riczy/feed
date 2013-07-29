@@ -32,6 +32,9 @@
   </dependencies>
   
   <build>
+  	<!-- Overriding the name of the WAR to exclude the version so that the
+  		 name is consistent when it is deployed. -->
+	<finalName>${artifactId}</finalName>
     <plugins>
       <plugin>
       	<groupId>org.apache.maven.plugins</groupId>
