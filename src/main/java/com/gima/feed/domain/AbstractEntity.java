@@ -36,7 +36,6 @@ public abstract class AbstractEntity implements Entity, Comparable<AbstractEntit
     * @return true if this is a new entity instance that does not exist in a 
     *          persistence store and false if it is not.
     */
-   @XmlTransient
    public Boolean isNew() {
       return id == null;
    }

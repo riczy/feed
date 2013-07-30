@@ -28,12 +28,14 @@ Feed.View.MeasurementTable = Backbone.View.extend({
 		this.rows = [];
 	},
 	render : function() {
-		var html = '';
-		for (var i = 0; i < this.collection.length; i++) {
+		var html = '<tr><td>This</td><td>Sucks</td></tr>';
+		/*
+		_.each (this.collection, function {
 			var rowView = new Feed.View.MeasurementRow({model: this.collection[i]});
 			this.rows.push(rowView);
 			html += rowView.render();
 		}
+		*/
 		this.$el.html(html);
 		return this;
 	}
