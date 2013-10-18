@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name="recipe_ingredient")
-public class RecipeIngredient extends AbstractEntity {
+public class Ingredient extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
    
@@ -29,7 +29,7 @@ public class RecipeIngredient extends AbstractEntity {
    
    @ManyToOne
    @JoinColumn(name="measurement_id")
-   private MeasurementType measurement;
+   private Measurement measurement;
 
    @Column(name="item", length=2000, nullable=false)
    private String item;
@@ -58,11 +58,11 @@ public class RecipeIngredient extends AbstractEntity {
       this.quantity = quantity;
    }
    
-   public MeasurementType getMeasurement() {
+   public Measurement getMeasurement() {
       return measurement;
    }
    
-   public void setMeasurement(MeasurementType measurement) {
+   public void setMeasurement(Measurement measurement) {
       this.measurement = measurement;
    }
    

@@ -31,10 +31,10 @@ public class Recipe extends AbstractEntity {
    
    @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
    //@XmlTransient
-   private Set<RecipeIngredient> ingredients;
+   private Set<Ingredient> ingredients;
    
    @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
-   private Set<RecipeStep> steps;
+   private Set<Step> steps;
    
    @Temporal(TemporalType.TIMESTAMP)
    @Column(name="creationDate", nullable=false)
@@ -65,22 +65,22 @@ public class Recipe extends AbstractEntity {
    }
 
    
-   public Set<RecipeIngredient> getIngredients() {
+   public Set<Ingredient> getIngredients() {
       return ingredients;
    }
 
    
-   public void setIngredients(Set<RecipeIngredient> ingredients) {
+   public void setIngredients(Set<Ingredient> ingredients) {
       this.ingredients = ingredients;
    }
 
    
-   public Set<RecipeStep> getSteps() {
+   public Set<Step> getSteps() {
       return steps;
    }
 
    
-   public void setSteps(Set<RecipeStep> steps) {
+   public void setSteps(Set<Step> steps) {
       this.steps = steps;
    }
 

@@ -2,6 +2,8 @@ package com.gima.feed.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -10,8 +12,11 @@ import javax.persistence.Table;
  * </p> 
  */
 @Entity
+@NamedQueries(
+      @NamedQuery(name="everything",
+            query="select a from MeasurementType a"))
 @Table(name="measurement")
-public class MeasurementType extends AbstractEntity {
+public class Measurement extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
    
