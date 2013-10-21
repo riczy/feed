@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name="recipe_ingredient")
+@Table(name="ingredient")
 public class Ingredient extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class Ingredient extends AbstractEntity {
    private Recipe recipe;
    
    @Column(name="sort_order", precision=5, nullable=false)
-   private Integer sortOrder;
+   private Integer order;
    
    @Column(name="quantity", length=20)
    private String quantity;
@@ -42,12 +42,12 @@ public class Ingredient extends AbstractEntity {
       this.recipe = recipe;
    }
    
-   public Integer getSortOrder() {
-      return sortOrder;
+   public Integer getOrder() {
+      return order;
    }
 
-   public void setSortOrder(Integer sortOrder) {
-      this.sortOrder = sortOrder;
+   public void setOrder(Integer sortOrder) {
+      this.order = sortOrder;
    }
    
    public String getQuantity() {
