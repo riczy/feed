@@ -7,8 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="recipe_step")
-public class RecipeStep extends AbstractEntity {
+@Table(name="instruction")
+public class Instruction extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
    
@@ -17,7 +17,7 @@ public class RecipeStep extends AbstractEntity {
    private Recipe recipe;
    
    @Column(name="sort_order", precision=5, nullable=false)
-   private Integer sortOrder;
+   private Integer order;
    
    @Column(name="text", nullable=false)
    private String text;

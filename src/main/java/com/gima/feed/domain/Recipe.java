@@ -29,79 +29,67 @@ public class Recipe extends AbstractEntity {
    @Column(name="description", length=2000)
    private String description;
    
-   @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
-   //@XmlTransient
-   private Set<RecipeIngredient> ingredients;
+   @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER, mappedBy="recipe")
+   private Set<Ingredient> ingredients;
    
-   @OneToMany(cascade={CascadeType.REMOVE}, fetch=FetchType.EAGER, mappedBy="recipe")
-   private Set<RecipeStep> steps;
+   @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER, mappedBy="recipe")
+   private Set<Instruction> instructions;
    
    @Temporal(TemporalType.TIMESTAMP)
    @Column(name="creationDate", nullable=false)
    private Date creationDate;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @Column(name="lastModificationDate", nullable=false)
-   private Date lastModificationDate;
+   @Column(name="modificationDate", nullable=false)
+   private Date modificationDate;
 
    
    public String getTitle() {
       return title;
    }
-
    
    public void setTitle(String title) {
       this.title = title;
    }
 
-   
    public String getDescription() {
       return description;
    }
 
-   
    public void setDescription(String description) {
       this.description = description;
    }
-
    
-   public Set<RecipeIngredient> getIngredients() {
+   public Set<Ingredient> getIngredients() {
       return ingredients;
    }
 
-   
-   public void setIngredients(Set<RecipeIngredient> ingredients) {
+   public void setIngredients(Set<Ingredient> ingredients) {
       this.ingredients = ingredients;
    }
-
    
-   public Set<RecipeStep> getSteps() {
-      return steps;
+   public Set<Instruction> getInstructions() {
+      return instructions;
    }
-
    
-   public void setSteps(Set<RecipeStep> steps) {
-      this.steps = steps;
+   public void setInstructions(Set<Instruction> steps) {
+      this.instructions = steps;
    }
-
    
    public Date getCreationDate() {
       return creationDate;
    }
-
    
    public void setCreationDate(Date creationDate) {
       this.creationDate = creationDate;
    }
-
    
-   public Date getLastModificationDate() {
-      return lastModificationDate;
+   public Date getModificationDate() {
+      return modificationDate;
    }
-
    
-   public void setLastModificationDate(Date lastModificationDate) {
-      this.lastModificationDate = lastModificationDate;
+   public void setModificationDate(Date modificationDate) {
+      this.modificationDate = modificationDate;
    }
    
 }

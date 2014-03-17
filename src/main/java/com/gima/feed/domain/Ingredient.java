@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name="recipe_ingredient")
-public class RecipeIngredient extends AbstractEntity {
+@Table(name="ingredient")
+public class Ingredient extends AbstractEntity {
 
    private static final long serialVersionUID = 1L;
    
@@ -22,14 +22,14 @@ public class RecipeIngredient extends AbstractEntity {
    private Recipe recipe;
    
    @Column(name="sort_order", precision=5, nullable=false)
-   private Integer sortOrder;
+   private Integer order;
    
    @Column(name="quantity", length=20)
    private String quantity;
    
    @ManyToOne
    @JoinColumn(name="measurement_id")
-   private MeasurementType measurement;
+   private Measurement measurement;
 
    @Column(name="item", length=2000, nullable=false)
    private String item;
@@ -42,12 +42,12 @@ public class RecipeIngredient extends AbstractEntity {
       this.recipe = recipe;
    }
    
-   public Integer getSortOrder() {
-      return sortOrder;
+   public Integer getOrder() {
+      return order;
    }
 
-   public void setSortOrder(Integer sortOrder) {
-      this.sortOrder = sortOrder;
+   public void setOrder(Integer sortOrder) {
+      this.order = sortOrder;
    }
    
    public String getQuantity() {
@@ -58,11 +58,11 @@ public class RecipeIngredient extends AbstractEntity {
       this.quantity = quantity;
    }
    
-   public MeasurementType getMeasurement() {
+   public Measurement getMeasurement() {
       return measurement;
    }
    
-   public void setMeasurement(MeasurementType measurement) {
+   public void setMeasurement(Measurement measurement) {
       this.measurement = measurement;
    }
    
