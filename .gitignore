@@ -1,2 +1,22 @@
+# Eclipse #
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+.classpath
+.project
+.settings/
+.externalToolBuilders/
+
+# Mac #
 .DS_Store
+
+# Maven #
 target/
+
+# Java #
+*.class
+*.jar
+*.war
+*.ear
