@@ -1,4 +1,4 @@
-package com.gima.feed.domain;
+package feed.domain;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

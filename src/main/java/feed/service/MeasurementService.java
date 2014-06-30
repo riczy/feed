@@ -1,9 +1,9 @@
-package com.gima.feed.service;
+package feed.service;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.gima.feed.domain.Measurement;
+import feed.domain.Measurement;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

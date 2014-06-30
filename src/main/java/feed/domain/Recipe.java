@@ -1,4 +1,4 @@
-package com.gima.feed.domain;
+package feed.domain;
 
 import java.util.Date;
 import java.util.Set;
