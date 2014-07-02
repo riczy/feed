@@ -15,6 +15,10 @@ tmp/
 # Maven #
 target/
 
+# Node.js #
+node_modules/
+npm-debug.log
+
 # Java #
 *.class
 *.jar
