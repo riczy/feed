@@ -1,0 +1,23 @@
+body {
+   	margin: 0;
+   	min-width: 750px;
+}
+
+header, footer, div#content  {
+   	padding: 0px 12px;
+}
+.f-app-title {
+	padding-left: 10px;
+	padding-right: 15px;
+}
+.f-table {
+	max-width: 740px;
+}
+.f-table > thead > tr > th.f-action-col,
+.f-table > tbody > tr > th.f-action-col,
+.f-table > tfoot > tr > th.f-action-col,
+.f-table > thead > tr > td.f-action-col,
+.f-table > tbody > tr > td.f-action-col,
+.f-table > tfoot > tr > td.f-action-col {
+	width: 70px;
+}

@@ -8,9 +8,9 @@
 
     $ npm install -g bower
 
-1. Change into the project's home directory.
+1. Change into the project's webapp directory.
 
-    $ cd feed
+    $ cd feed/src/main/webapp
     
 1. Run bower to install the dependencies listed in the current directory's `bower.json` file.
 
@@ -18,4 +18,6 @@
 
 1. Start Node.js.
 
-    $ npm start
+    $ npm start --verbose
+    
+1. Use http://localhost:9000 to access the development page. (Note that the port number is configured in the `package.json` file.) 
