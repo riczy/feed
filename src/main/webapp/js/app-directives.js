@@ -7,7 +7,7 @@
  * <input wh-enterup="doSomething()">
  */
 angular
-   .module('directives')
+   .module('feed.directives')
    .directive('whEnterup', function() {
       return function(scope, element, attrs) {
          element.bind('keyup', function(event) {

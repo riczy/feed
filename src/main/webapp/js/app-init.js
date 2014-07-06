@@ -1,6 +1,6 @@
-angular.module('controllers', []);
-angular.module('directives', []);
-angular.module('services', []);
+angular.module('feed.controllers', []);
+angular.module('feed.directives', []);
+angular.module('feed.services', []);
 
 var feed = feed || {};
 

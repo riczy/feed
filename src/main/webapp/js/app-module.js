@@ -1,5 +1,5 @@
 angular
-   .module('app', [])
+   .module('app', ['ui.router', 'ui.bootstrap', 'feed.controllers'])
    .config(['$stateProvider', '$urlRouterProvider',
       function($stateProvider, $urlRouterProvider) {
          $urlRouterProvider.otherwise('/');
@@ -8,7 +8,7 @@ angular
                url: '/'
             }).
             state('recipe-add', {
-               url: 'recipe/add',
+               url: '/recipe/add',
                templateUrl: 'partials/recipe.html',
                controller: 'RecipeAddController'
             });

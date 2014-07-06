@@ -9,12 +9,13 @@
 <link rel="stylesheet" href="css/app.css">
 <script src="js/app-init.js"></script>
 <script src="js/app-module.js"></script>
+<script src="js/controllers.js"></script>
 </head>
 <body ng-app="app">
 	<nav class="navbar navbar-default" role="navigation">
 	  <div class="navbar-header">
-	    <a ui-sref="home" class="h1 f-app-title">testtesttest</a>
-	    <a ui-sref="recipe-add">R</a>
+	    <a ui-sref="home" class="h1 f-app-title">feed</a>
+	    <a ui-sref="recipe-add">Recipe</a>
 	    <span ng-controller="RecipeSearchController">
 	      <input ng-model="searchText" wh-enterup="search()" type="text" placeholder="press to search" size="40">
 	      <button type="button" class="btn btn-default btn-sm" ng-click="search()">
@@ -23,7 +24,7 @@
 	    </span>
 	  </div>
 	</nav>
-<div id="content"></div>
+<div id="content" ui-view></div>
 <footer></footer>
 </body>
 </html>
