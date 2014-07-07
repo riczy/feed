@@ -2,7 +2,7 @@ angular
    .module('feed.controllers')
    .controller('RecipeAddController', ['$scope', '$modal', 
       function($scope, $modal) {
-         $scope.recipe = feed.model.recipe.templates.twoPartRecipe();
+         $scope.recipe = feed.model.recipe.templates.simple();
          $scope.addSection = function() {
             
          };
@@ -34,6 +34,7 @@ feed.model.recipe.templates = {
    simple : function() {
       var obj = feed.model.recipe.create();
       var index = obj.addSection();
+      obj.sections[index].addIngredient();
       obj.sections[index].addIngredient();
       obj.sections[index].addIngredient();
       obj.sections[index].addStep();
@@ -89,7 +90,7 @@ feed.model.recipe.create = function(data) {
               }); 
            },
            removeIngredient : function(index) {
-              if (index > 0 && index < this.ingredients.length) {
+              if (index >= 0 && index < this.ingredients.length) {
                  this.ingredients.splice(index, 1);
                  return true;
               }
@@ -101,7 +102,7 @@ feed.model.recipe.create = function(data) {
               });
            },
            removeStep : function(index) {
-              if (index > 0 && index < this.steps.length) {
+              if (index >= 0 && index < this.steps.length) {
                  this.steps.splice(index, 1);
                  return true;
               }

@@ -7,7 +7,7 @@
 	<div ng-repeat="ingredient in section.ingredients" ng-init="ingredientIndex = $index">
 		<input type="text" ng-model="ingredient.quantity" placeholder="Qty" size="7">
 		<input type="text" ng-model="ingredient.measurement" size="7">
-		<input type="text" ng-model="ingredient.item" placeholder="Ingredient" size="30">
+		<input type="text" ng-model="ingredient.item" placeholder="Ingredient" size="40">
 		<button type="button" class="btn btn-default btn-sm" ng-click="removeIngredient(sectionIndex, ingredientIndex)">
 			<span class="glyphicon glyphicon-remove"></span>
 		</button>
