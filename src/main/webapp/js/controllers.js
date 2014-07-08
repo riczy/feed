@@ -4,7 +4,7 @@ angular
       function($scope, $modal) {
          $scope.recipe = feed.model.recipe.templates.simple();
          $scope.addSection = function() {
-            
+            $scope.recipe.addSection(3, 1);
          };
          $scope.addIngredient = function(sectionIndex) {
             $scope.recipe.addIngredient(sectionIndex);
@@ -33,38 +33,19 @@ feed.model.recipe = {};
 feed.model.recipe.templates = {
    simple : function() {
       var obj = feed.model.recipe.create();
-      var index = obj.addSection();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addStep();
-      obj.sections[index].addStep();
+      obj.addSection(3, 2);
       return obj;
    },
    twoPartIngredient : function() {
       var obj = feed.model.recipe.create();
-      var index = obj.addSection();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      index = obj.addSection();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addStep();
-      obj.sections[index].addStep();
+      obj.addSection(2, 0);
+      obj.addSection(2, 2);
       return obj;
    },
    twoPartRecipe : function () {
       var obj = feed.model.recipe.create();
-      var index = obj.addSection();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addStep();
-      obj.sections[index].addStep();
-      index = obj.addSection();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addIngredient();
-      obj.sections[index].addStep();
-      obj.sections[index].addStep();
+      obj.addSection(2, 2);
+      obj.addSection(2, 2);
       return obj;
    }
 };
@@ -110,9 +91,25 @@ feed.model.recipe.create = function(data) {
            }
         };
       },
-      addSection : function() {
-         var newSection = this.createSection();
-         this.sections.push(newSection);
+      /**
+       * @description
+       * Adds a section to this instance.
+       * 
+       * @param   ingredientCount {Number} Optional. The number of blank ingredient
+       *          objects to add to the section.
+       * @param   stepCount {Number} Optional. The number of blank steps to add
+       *          to the section.
+       * @returns {Number} The index of the section that was added.
+       */
+      addSection : function(ingredientCount, stepCount) {
+         var section = this.createSection();
+         if (ingredientCount) {
+            for (var i = 0; i < ingredientCount; i++) section.addIngredient();
+         }
+         if (stepCount) {
+            for (i = 0; i < stepCount; i++) section.addStep();
+         }
+         this.sections.push(section);
          return this.sections.length - 1;
       },
       hasSection : function(index) {
