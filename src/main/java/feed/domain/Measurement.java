@@ -1,26 +1,23 @@
 package feed.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * <p>
  * Represents a measurement used for cooking.
- * </p> 
+ * </p>
+ * 
+ * @author  whyceewhite 
  */
-@Entity
-@NamedQueries(
-      @NamedQuery(name="everything",
-            query="select a from MeasurementType a"))
-@Table(name="measurement")
-public class Measurement extends AbstractEntity {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Measurement implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   
-   @Column(name="name")
    private String name;
    
    public String getName() {

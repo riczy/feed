@@ -66,7 +66,7 @@ feed.model.recipe.create = function(data) {
            addIngredient : function() {
               this.ingredients.push({
                  quantity: "",
-                 type: "",
+                 measurement: "",
                  item: ""
               }); 
            },

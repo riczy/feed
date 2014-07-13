@@ -1,13 +1,11 @@
-package feed.service;
+package feed.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import feed.domain.Measurement;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,13 +16,9 @@ import javax.ws.rs.Produces;
  * </p>
  */
 @Path("/measurements")
-@Stateless
-public class MeasurementService {
+public class MeasurementResource {
 
-   Logger logger = Logger.getLogger(MeasurementService.class.getName());
-   
-   @PersistenceContext(unitName="feed")
-   private EntityManager manager;
+   private final static Logger logger = Logger.getLogger(MeasurementResource.class.getName());
    
    /**
     * <p>
@@ -35,8 +29,7 @@ public class MeasurementService {
     */
    @GET
    @Produces("application/json")
-   @SuppressWarnings("unchecked")
    public List<Measurement> fetchAll() {
-      return manager.createNamedQuery("everything").getResultList();
+      return new ArrayList<Measurement>();
    }
 }

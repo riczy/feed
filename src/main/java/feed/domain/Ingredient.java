@@ -1,46 +1,25 @@
 package feed.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+/**
+ * <p>
+ * Represents how much of an ingredient is used in a recipe. 
+ * </p>
+ *  
+ * @author whyceewhite
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
-@Entity
-@Table(name="ingredient")
-public class Ingredient extends AbstractEntity {
+public class Ingredient implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   
-   @ManyToOne(optional=false)
-   @JoinColumn(name="recipe_id", nullable=false, updatable=false)
-   private Recipe recipe;
-   
-   @Column(name="sort_order", precision=5, nullable=false)
    private Integer order;
-   
-   @Column(name="quantity", length=20)
    private String quantity;
-   
-   @ManyToOne
-   @JoinColumn(name="measurement_id")
-   private Measurement measurement;
-
-   @Column(name="item", length=2000, nullable=false)
+   private String measurement;
    private String item;
-
-   public Recipe getRecipe() {
-      return recipe;
-   }
-
-   public void setRecipe(Recipe recipe) {
-      this.recipe = recipe;
-   }
    
    public Integer getOrder() {
       return order;
@@ -58,11 +37,11 @@ public class Ingredient extends AbstractEntity {
       this.quantity = quantity;
    }
    
-   public Measurement getMeasurement() {
+   public String getMeasurement() {
       return measurement;
    }
    
-   public void setMeasurement(Measurement measurement) {
+   public void setMeasurement(String measurement) {
       this.measurement = measurement;
    }
    

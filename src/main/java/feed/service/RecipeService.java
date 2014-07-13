@@ -1,64 +1,43 @@
 package feed.service;
 
-import java.net.URI;
 import java.util.logging.Logger;
-
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 
 import feed.domain.Recipe;
 
-
-@Path("/recipes")
-@Stateless
+/**
+ * <p>
+ * The service manager for handling persistence for recipe objects.
+ * </p>
+ * 
+ * @author  whyceewhite
+ */
 public class RecipeService {
-
-   Logger logger = Logger.getLogger(RecipeService.class.getName());
    
-   @PersistenceContext(unitName="feed")
-   private EntityManager manager;
+   protected final static Logger logger = Logger.getLogger(RecipeService.class.getName());
+   private final static RecipeService service;
    
-   /**
-    * <p>
-    * A RESTful creation of a recipe instance.
-    * </p>
-    * 
-    * @param recipe
-    * @return
-    */
-   @POST
-   @Consumes("application/json")
-   @Produces("application/json")
-   public Response create(Recipe recipe) {
-      Recipe savedObj = this.save(recipe);
-      URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getId().toString()).build();
-      return Response.created(uri).entity(savedObj).build();
+   static {
+      service = new RecipeService();
    }
    
+   public static RecipeService getInstance() {
+      return service;
+   }
+   
+   private RecipeService() {
+   }
+
    /**
     * <p>
     * Saves the given recipe instance to a persistent store.
     * </p>
     * 
-    * @param entity The recipe instance to save.
-    * @return The saved recipe instance along with any attribute updates that
-    *       result from saving.
+    * @param   entity The recipe instance to save.
+    * @return  The saved recipe instance along with any attribute updates that
+    *          result from saving.
     */
-   public Recipe save(Recipe entity) {
-      if (entity.isNew()) {
-         manager.persist(entity);
-      } else {
-         entity = manager.merge(entity);
-      }
-      return entity;
+   public Recipe save(Recipe recipe) {
+      return null;
    }
    
    /**
@@ -67,15 +46,12 @@ public class RecipeService {
     * If no matching instance exists then null is returned.
     * </p>
     * 
-    * @param id The unique id of the recipe instance to find. Required.
-    * @return The recipe that is uniquely identified by the given id or null
-    *       if no matching recipe is found.
+    * @param   id The unique id of the recipe instance to find. Required.
+    * @return  The recipe that is uniquely identified by the given id or null
+    *          if no matching recipe is found.
     */
-   @GET
-   @Path("/{id: [0-9]+}")
-   @Produces("application/json")
    public Recipe find(Long id) {
-      return manager.find(Recipe.class, id);
+      return null;
    }
-   
+  
 }
