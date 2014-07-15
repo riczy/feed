@@ -1,6 +1,11 @@
 package feed.service;
 
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
 
 import feed.domain.Recipe;
 
@@ -37,6 +42,16 @@ public class RecipeService {
     *          result from saving.
     */
    public Recipe save(Recipe recipe) {
+      MongoClient client;
+      try {
+         client = new MongoClient("localhost");
+      } catch (UnknownHostException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      DB db = client.getDB("feed");
+      DBCollection collection = db.getCollection("recipe");
+      //collection.ins
       return null;
    }
    
