@@ -10,8 +10,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * This object represents one step in a set of instructions for
  * making a recipe.
  * <p>
- *   
- * @author whyceewhite
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Step implements Serializable {

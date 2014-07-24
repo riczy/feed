@@ -11,8 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * <p>
  * Represents a recipe.
  * </p>
- * 
- * @author whyceewhite
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -13,9 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * and one set of steps. Or, two groups of ingredients with their own steps. The
  * combination is based on how the recipe is composed by the author.
  * </p>
- * 
- * @author  whyceewhite
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Section implements Serializable {

@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * <p>
  * Represents how much of an ingredient is used in a recipe. 
  * </p>
- *  
- * @author whyceewhite
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Ingredient implements Serializable {

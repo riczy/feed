@@ -13,8 +13,6 @@ import feed.domain.Recipe;
  * <p>
  * The service manager for handling persistence for recipe objects.
  * </p>
- * 
- * @author  whyceewhite
  */
 public class RecipeService {
    
@@ -41,14 +39,8 @@ public class RecipeService {
     * @return  The saved recipe instance along with any attribute updates that
     *          result from saving.
     */
-   public Recipe save(Recipe recipe) {
-      MongoClient client;
-      try {
-         client = new MongoClient("localhost");
-      } catch (UnknownHostException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+   public Recipe save(Recipe recipe) throws UnknownHostException {
+      MongoClient client = new MongoClient("localhost");
       DB db = client.getDB("feed");
       DBCollection collection = db.getCollection("recipe");
       //collection.ins

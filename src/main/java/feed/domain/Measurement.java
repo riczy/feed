@@ -10,8 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * <p>
  * Represents a measurement used for cooking.
  * </p>
- * 
- * @author  whyceewhite 
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

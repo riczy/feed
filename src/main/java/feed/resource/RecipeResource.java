@@ -1,6 +1,8 @@
 package feed.resource;
 
 import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
@@ -9,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 import feed.domain.Recipe;
@@ -19,8 +22,6 @@ import feed.service.RecipeService;
  * <p>
  * The RESTful resource for managing recipes.
  * </p>
- * 
- * @author whyceewhite
  */
 @Path("/recipes")
 public class RecipeResource {
@@ -39,7 +40,13 @@ public class RecipeResource {
    @Consumes("application/json")
    @Produces("application/json")
    public Response create(Recipe recipe) {
-      Recipe savedObj = RecipeService.getInstance().save(recipe);
+      Recipe savedObj;
+      try {
+         savedObj = RecipeService.getInstance().save(recipe);
+      } catch (UnknownHostException e) {
+         logger.log(Level.SEVERE, "Could not connect to db due to an unknown host.", e);
+         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+      }
       URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getId().toString()).build();
       return Response.created(uri).entity(savedObj).build();
    }
