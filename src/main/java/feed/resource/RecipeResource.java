@@ -1,9 +1,8 @@
 package feed.resource;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,6 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import feed.domain.Recipe;
 import feed.service.RecipeService;
@@ -26,26 +28,27 @@ import feed.service.RecipeService;
 @Path("/recipes")
 public class RecipeResource {
 
-   protected final static Logger logger = Logger.getLogger(RecipeResource.class.getName());
+   protected final static Logger logger = LoggerFactory.getLogger(RecipeResource.class.getName());
    
    /**
     * <p>
-    * A RESTful creation of a recipe instance.
+    * Saves the given recipe.
     * </p>
     * 
-    * @param recipe
+    * @param   recipe A JSON object of the recipe.
     * @return
     */
    @POST
    @Consumes("application/json")
    @Produces("application/json")
    public Response create(Recipe recipe) {
+      
       Recipe savedObj;
       try {
          savedObj = RecipeService.getInstance().save(recipe);
-      } catch (UnknownHostException e) {
-         logger.log(Level.SEVERE, "Could not connect to db due to an unknown host.", e);
-         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+      } catch (IOException e) {
+         logger.error("Could not connect to db due to an unknown host.", e);
+         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
       URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getId().toString()).build();
       return Response.created(uri).entity(savedObj).build();

@@ -1,6 +1,7 @@
 package feed.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,6 +25,44 @@ public class Section implements Serializable {
    
    public String getTitle() {
       return title;
+   }
+   
+   public boolean add(Ingredient ingredient) {
+      
+      if (ingredient == null) return false;
+      
+      if (this.ingredients == null) {
+         this.ingredients = new ArrayList<Ingredient>();
+      }
+      return this.ingredients.add(ingredient);
+   }
+   
+   boolean add(Integer order, String quantity, String measurement, String item) {
+      
+      Ingredient i = new Ingredient();
+      i.setItem(item);
+      i.setMeasurement(measurement);
+      i.setOrder(order);
+      i.setQuantity(quantity);
+      return this.add(i);
+   }
+   
+   public boolean add(Step step) {
+      
+      if (step == null) return false;
+      
+      if (this.steps == null) {
+         this.steps = new ArrayList<Step>();
+      }
+      return this.steps.add(step);
+   }
+   
+   boolean add(Integer order, String text) {
+      
+      Step s = new Step();
+      s.setOrder(order);
+      s.setText(text);
+      return this.add(s);
    }
    
    public void setTitle(String title) {

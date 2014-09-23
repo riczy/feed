@@ -1,10 +1,33 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+header, footer, div#content  {
+   	padding: 0px 25px;
+}
+.app-title {
+	font-family: 'Lobster', cursive;
+	font-size: 30px;
+	color: black;
+}
+ul.sortable-list {
+	list-style: none outside none;
+	margin: 10px 0 30px;
+	padding: 0;
+}
+ul.sortable-list > li {
+	cursor: move;
+	/*padding: 5px 10px;*/
+	margin: 5px 0;
+	
+}
+/*
+
 body {
    	margin: 0;
    	min-width: 750px;
-}
-
-header, footer, div#content  {
-   	padding: 0px 12px;
 }
 .f-app-title {
 	padding-left: 10px;
@@ -21,3 +44,4 @@ header, footer, div#content  {
 .f-table > tfoot > tr > td.f-action-col {
 	width: 70px;
 }
+*/

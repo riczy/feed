@@ -1,11 +1,12 @@
 package feed.service;
 
-import java.net.UnknownHostException;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
+import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import feed.domain.Recipe;
 
@@ -27,7 +28,7 @@ public class RecipeService {
       return service;
    }
    
-   private RecipeService() {
+   private RecipeService()  {
    }
 
    /**
@@ -38,13 +39,18 @@ public class RecipeService {
     * @param   entity The recipe instance to save.
     * @return  The saved recipe instance along with any attribute updates that
     *          result from saving.
+    * @throws IOException 
     */
-   public Recipe save(Recipe recipe) throws UnknownHostException {
-      MongoClient client = new MongoClient("localhost");
-      DB db = client.getDB("feed");
+   public Recipe save(Recipe recipe) throws IOException {
+      
+      if (recipe.getId() == null) {
+         recipe.setId(DatabaseClient.generateUuid());
+      }
+      DB db = DatabaseClient.getDB();
       DBCollection collection = db.getCollection("recipe");
-      //collection.ins
-      return null;
+      DBObject dbObj = (DBObject)JSON.parse(recipe.toJson());
+      collection.insert(dbObj);
+      return recipe;
    }
    
    /**
