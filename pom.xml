@@ -10,10 +10,16 @@
 	<description>A personal recipe library</description>
 
 	<properties>
-		<resteasy.version>3.0.8.Final</resteasy.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-web-7.0</artifactId>
+			<version>1.0.1.Final</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
@@ -29,53 +35,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
-		</dependency>
-		<!-- core library -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxrs</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- JAXB support -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxb-provider</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- multipart/form-data and multipart/mixed support -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-multipart-provider</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- Resteasy Server Cache -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-cache-core</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- JAXB + Atom support -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-atom-provider</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- Guice integration -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-guice</artifactId>
-			<version>${resteasy.version}</version>
-		</dependency>
-		<!-- Asynchronous HTTP support with Servlet 3.0 -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>async-http-servlet-3.0</artifactId>
-			<version>${resteasy.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -93,21 +52,18 @@
 		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
+				<!-- 
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
+				 -->
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
