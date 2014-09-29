@@ -1,8 +1,7 @@
-angular
-   .module('app')
-   .factory('RecipeService', ['$http', function($http){
+feed.app.factory('RecipeService', 
+	['$http', function($http){
       
-      var resourceUrl = '/feed/api/recipe';
+      var resourceUrl = 'api/recipes';
       
       return {
          /**
@@ -14,7 +13,7 @@ angular
           *          caller to chain onsuccess and onerror functions.
           */
          create : function(recipeObj) {
-            return $http.post(resourceUrl + "/", recipeObj);
+            return $http.post(resourceUrl, recipeObj);
          },
          
          /**
@@ -26,7 +25,8 @@ angular
           *          caller to chain onsuccess and onerror functions.
           */
          save : function(recipeObj) {
-            return $http.put(resourceUrl + "/", recipeObj);
+            return $http.put(resourceUrls, recipeObj);
          }
       };
-   }]);
+   }]
+   );

@@ -1,14 +1,13 @@
-angular
-   .module('feed.controllers')
-   .controller('RecipeSearchController', ['$scope', 
+feed.app.controller('RecipeSearchController', ['$scope', 
       function($scope) {
          $scope.text = "";
          $scope.search = function() {
             
          };
       }
-   ])
-   .controller('RecipeAddController', ['$scope', '$modal', 'RecipeService',
+   ]);
+   
+feed.app.controller('RecipeAddController', ['$scope', '$modal', 'RecipeService',
       function($scope, $modal, RecipeService) {
       
          $scope.pageTitle = "New Recipe";
@@ -30,7 +29,7 @@ angular
          };
          $scope.create = function() {
             RecipeService
-               .create()
+               .create($scope.recipe.compressedCopy())
                .success(function(){
                   console.log("success");
                })
@@ -39,16 +38,17 @@ angular
                });
          };
       }
-   ])
-   .controller('RecipeEditController', ['$scope', '$stateParams',
+   ]);
+   
+feed.app.controller('RecipeEditController', ['$scope', '$stateParams',
       function($scope, $stateParams) {
          $scope.pageTitle = "Recipe " + $stateParams.id;
         
       }
-   ])
-   .controller('RecipeViewController', ['$scope', 
+   ]);
+   
+feed.app.controller('RecipeViewController', ['$scope', 
       function($scope) {
          
       }
-   ])
-   ;
+   ]);

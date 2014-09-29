@@ -1,9 +1,13 @@
-angular.module('feed.controllers', []);
-angular.module('feed.directives', []);
-angular.module('feed.services', []);
-
 var feed = feed || {};
 
+feed.app = angular.module('app', 
+	[
+		'ui.sortable', 
+		'ui.router',
+		'ui.bootstrap'
+	]
+);
+	
 /**
  * <p>Returns true if the given obj parameter is neither undefined
  * nor null. Returns false if the given obj parameter is undefined
@@ -37,4 +41,3 @@ feed.isEmpty = function(obj) {
 
    return false;
 };
-

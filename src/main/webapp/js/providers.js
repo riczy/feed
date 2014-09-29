@@ -1,6 +1,5 @@
-angular
-   .module('app', ['ui.sortable', 'ui.router', 'ui.bootstrap', 'feed.controllers'])
-   .config(['$stateProvider', '$urlRouterProvider',
+feed.app.config(
+	['$stateProvider', '$urlRouterProvider',
       function($stateProvider, $urlRouterProvider) {
          $urlRouterProvider.otherwise('/');
          $stateProvider.
@@ -27,5 +26,26 @@ angular
                templateUrl: 'partials/recipe-search.html',
                controller: 'RecipeSearchController'
             });
-      }
-   ]);
+      	}
+   	]
+);
+
+feed.app.config(['$provide', '$httpProvider', 
+   function ($provide, $httpProvider) {
+   
+      $provide.factory('interceptor', ['$q', '$location', function ($q, $location) {
+         return {
+            responseError: function (responseObj) {
+               if (responseObj.status == 403) {
+                     window.location = "forbidden.html";
+                     return $q.reject(responseObj);
+               }
+               return $q.reject(responseObj);
+            }
+         };
+      }]);
+   
+      $httpProvider.interceptors.push('interceptor');
+      
+   }]
+);

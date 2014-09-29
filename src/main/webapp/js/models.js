@@ -1,11 +1,5 @@
-/**
- * Relies on app-init.js being loaded first.
- */
-
-feed = feed || {};
 feed.model = feed.model || {};
 feed.model.recipe = {};
-
 feed.model.recipe.templates = {
    simple : function() {
       var obj = feed.model.recipe.create();
@@ -40,11 +34,15 @@ feed.model.recipe.create = function(data) {
            title : "",
            ingredients : [],
            steps : [],
-           addIngredient : function() {
+           addIngredient : function(item, quantity, measurement) {
               this.ingredients.push({
-                 quantity: "",
-                 measurement: "",
-                 item: ""
+                 quantity: quantity || "",
+                 measurement: measurement || "",
+                 item: item || "",
+                 isEmpty : function() {
+                 	return feed.isEmpty(this.quantity) &&
+                 		feed.isEmpty(this.measurement) && feed.isEmpty(this.item);
+                 }
               }); 
            },
            removeIngredient : function(index) {
@@ -54,9 +52,12 @@ feed.model.recipe.create = function(data) {
               }
               return false;
            },
-           addStep : function() {
+           addStep : function(text) {
               this.steps.push({
-                 text: ""
+                 text: text || "",
+                 isEmpty : function() {
+                 	return feed.isEmpty(this.text);
+                 }
               });
            },
            removeStep : function(index) {
@@ -65,7 +66,24 @@ feed.model.recipe.create = function(data) {
                  return true;
               }
               return false;
-           }
+           },
+           compressedCopy : function() {
+	           function compress(collection) {
+	              var compressedCollection = [];
+	           	  for (var i = 0; i < collection.length; i++) {
+	           	     if (!collection[i].isEmpty()) {
+	           	     	compressedCollection.push(collection[i]);
+	           	     }
+	           	  }
+	           	  return compressedCollection;
+	           };
+           	  var obj = { title : this.title };
+           	  obj.steps = compress(this.steps);
+           	  obj.ingredients = compress(this.ingredients);
+           	  
+           	  return ((obj.title || obj.title.length == 0) && 
+           	  	 obj.steps.length == 0 && obj.ingredients.length == 0) ? null : obj;
+           },
         };
       },
       /**
@@ -117,6 +135,21 @@ feed.model.recipe.create = function(data) {
             return this.sections[sectionIndex].removeStep(stepIndex);
          }
          return false;
+      },
+      compressedCopy : function() {
+      	 var obj = {
+           title : this.title,
+           description : this.description,
+           sections : []
+      	 };
+      	 
+      	 for (var i = 0; i < this.sections.length; i++) {
+      	 	var tempSection = this.sections[i].compressedCopy();
+      	 	if (tempSection) {
+      	 		obj.sections.push(tempSection);
+      	 	}
+      	 }
+      	 return obj;
       }
       
    };

@@ -6,9 +6,7 @@
  * @usage
  * <input wh-enterup="doSomething()">
  */
-angular
-   .module('feed.directives')
-   .directive('whEnterup', function() {
+feed.app.directive('whEnterup', function() {
       return function(scope, element, attrs) {
          element.bind('keyup', function(event) {
             if (event.which == '13') {
@@ -26,9 +24,7 @@ angular
  * @usage
  * <input wh-keyup="doSomething()" keys="[27,13]">
  */
-angular
-   .module('directives')
-   .directive('whKeyup', function() {
+feed.app.directive('whKeyup', function() {
       return function(scope, element, attrs) {
          function applyKeyup() {
             scope.$apply(attrs.whKeyup);
