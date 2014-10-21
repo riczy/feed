@@ -22,17 +22,17 @@ public class Recipe implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   private String id;
+   private Long uuid;
    private String title;
    private String description;
    private List<Section> sections;
    
-   public String getId() {
-      return id;
+   public Long getUuid() {
+      return uuid;
    }
 
-   public void setId(String id) {
-      this.id = id;
+   public void setUuid(Long id) {
+      this.uuid = id;
    }
 
    public String getTitle() {

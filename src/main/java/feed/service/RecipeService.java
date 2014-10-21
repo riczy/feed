@@ -43,8 +43,8 @@ public class RecipeService {
     */
    public Recipe save(Recipe recipe) throws IOException {
       
-      if (recipe.getId() == null) {
-         recipe.setId(DatabaseClient.generateUuid());
+      if (recipe.getUuid() == null) {
+         recipe.setUuid(DatabaseClient.generateUuid());
       }
       DB db = DatabaseClient.getDB();
       DBCollection collection = db.getCollection("recipe");

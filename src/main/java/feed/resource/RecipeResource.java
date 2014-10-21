@@ -49,7 +49,7 @@ public class RecipeResource {
          logger.error("Could not connect to db due to an unknown host.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
-      URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getId().toString()).build();
+      URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getUuid().toString()).build();
       return Response.created(uri).entity(savedObj).build();
    }
    

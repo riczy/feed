@@ -36,10 +36,8 @@ public class DatabaseClient {
       return getClient().getDB("feed");
    }
    
-   static String generateUuid() {
-      byte bytes[] = new byte[20];
-      secureRandom.nextBytes(bytes);
-      return new String(bytes);
+   static long generateUuid() {
+      return secureRandom.nextLong();
    }
    
    private DatabaseClient() throws UnknownHostException {

@@ -20,8 +20,16 @@ ul.sortable-list {
 ul.sortable-list > li {
 	cursor: move;
 	/*padding: 5px 10px;*/
-	margin: 5px 0;
+	margin: 5px 0 0 0;
 	
+}
+div.recipe-edit-section {
+    background-color: darkseagreen;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: palevioletred;
+    padding: 15px 10px;
+    margin-bottom: 10px;
 }
 /*
 
