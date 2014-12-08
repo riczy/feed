@@ -11,7 +11,6 @@ public class RecipeTest {
       
       Recipe r = new Recipe();
       r.setDescription("Description");
-      r.setUuid("ABC");
       r.setTitle("Title");
       
       Section s = new Section();
@@ -27,7 +26,6 @@ public class RecipeTest {
       System.out.println(json);
       Recipe r2 = Recipe.toObject(json);
       assertEquals(r.getDescription(), r2.getDescription());
-      assertEquals(r.getUuid(), r2.getUuid());
    }
 
 }

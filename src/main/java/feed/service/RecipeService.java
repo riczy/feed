@@ -36,16 +36,13 @@ public class RecipeService {
     * Saves the given recipe instance to a persistent store.
     * </p>
     * 
-    * @param   entity The recipe instance to save.
+    * @param   recipe The recipe instance to save.
     * @return  The saved recipe instance along with any attribute updates that
     *          result from saving.
     * @throws IOException 
     */
    public Recipe save(Recipe recipe) throws IOException {
       
-      if (recipe.getUuid() == null) {
-         recipe.setUuid(DatabaseClient.generateUuid());
-      }
       DB db = DatabaseClient.getDB();
       DBCollection collection = db.getCollection("recipe");
       DBObject dbObj = (DBObject)JSON.parse(recipe.toJson());
@@ -64,6 +61,7 @@ public class RecipeService {
     *          if no matching recipe is found.
     */
    public Recipe find(Long id) {
+
       return null;
    }
   
