@@ -24,10 +24,12 @@ ul.sortable-list > li {
 	
 }
 div.recipe-edit-section {
+    /*
     background-color: darkseagreen;
     border: 1px solid;
     border-radius: 5px;
     border-color: palevioletred;
+    */
     padding: 15px 10px;
     margin-bottom: 10px;
 }

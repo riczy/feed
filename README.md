@@ -22,7 +22,7 @@
     
 1. Use http://localhost:9000 to access the development page. (Note that the port number is configured in the `package.json` file.)
 
-## RUNNING THE APP USING NODEJS
+## RUNNING THE APP FOR DEVELOPMENT USING NODEJS
 
 1. Change into the project's webapp directory.
 
@@ -34,7 +34,11 @@
 
 1. Go to http://localhost:9000
 
-## RUNNING THE APP USING JBOSS
+## RUNNING THE APP FOR DEVELOPMENT USING JBOSS
+
+1. Start mongodb.
+
+    $ sudo mongod
 
 1. Start JBoss.
 

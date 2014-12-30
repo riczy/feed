@@ -7,11 +7,19 @@ feed.app.controller('RecipeSearchController', ['$scope',
     }
 ]);
 
-feed.app.controller('RecipeAddController', ['$scope', '$state', '$modal', 'RecipeService',
-    function ($scope, $state, $modal, RecipeService) {
+feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'RecipeService', 'MeasurementService', 'ErrorService',
+    function ($scope, $state, $location, RecipeService, MeasurementService, ErrorService) {
 
-        $scope.pageTitle = "New Recipe";
         $scope.recipe = feed.model.recipe.initialize($state.current.data.type);
+
+        MeasurementService.getAll()
+            .success(function(data, status) {
+                $scope.measurements = data;
+            })
+            .error(function(data, status) {
+                $scope.measurements = [{name: "tablespoon"},{name: "teaspoon"},{name: "cup"}];
+            });
+
         $scope.addSection = function () {
             $scope.recipe.addSection(3, 1);
         };
@@ -29,12 +37,14 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', '$modal', 'Recip
         };
         $scope.create = function () {
             RecipeService
-                .create($scope.recipe.compressedCopy())
-                .success(function () {
-                    console.log("success");
+                .create($scope.recipe.asApiObject())
+                .success(function (data, status) {
+                    $scope.recipe.setId(data);
                 })
-                .error(function () {
-                    console.log("error");
+                .error(function (data, status) {
+                    ErrorService.setTitle("An error occurred when saving the recipe.");
+                    ErrorService.setMessage(data);
+                    $location.path("/error");
                 });
         };
     }
@@ -51,4 +61,13 @@ feed.app.controller('RecipeViewController', ['$scope',
     function ($scope) {
 
     }
+]);
+
+feed.app.controller('ErrorController', [ '$scope', 'ErrorService',
+    function($scope, ErrorService) {
+
+        $scope.title = ErrorService.getTitle();
+        $scope.message = ErrorService.getMessage();
+        ErrorService.reset();
+   }
 ]);

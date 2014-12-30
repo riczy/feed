@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import feed.service.RecipeService;
  * </p>
  */
 @Path("/recipes")
+@Produces("application/json")
 public class RecipeResource {
 
    protected final static Logger logger = LoggerFactory.getLogger(RecipeResource.class.getName());
@@ -35,22 +37,20 @@ public class RecipeResource {
     * </p>
     * 
     * @param   recipe A JSON object of the recipe.
-    * @return
+    * @return  The unique id of the instance that was created wrapped inside
+    *          of a Response object.
     */
    @POST
    @Consumes("application/json")
-   @Produces("application/json")
    public Response create(Recipe recipe) {
       
-      Recipe savedObj;
       try {
-         savedObj = RecipeService.getInstance().save(recipe);
-      } catch (IOException e) {
-         logger.error("Could not connect to db due to an unknown host.", e);
+         ObjectId savedObjId = RecipeService.getInstance().save(recipe);
+         return Response.status(Status.CREATED).entity(savedObjId.toString()).build();
+      } catch (Exception e) {
+         logger.error("An error occurred while creating a recipe.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
-      URI uri = UriBuilder.fromResource(this.getClass()).path(savedObj.getUuid().toString()).build();
-      return Response.created(uri).entity(savedObj).build();
    }
    
    /**
@@ -64,9 +64,8 @@ public class RecipeResource {
     *          if no matching recipe is found.
     */
    @GET
-   @Path("/{id: [0-9]+}")
-   @Produces("application/json")
-   public Recipe find(Long id) {
+   @Path("/{id}")
+   public Recipe find(String id) {
       return RecipeService.getInstance().find(id);
    }
    

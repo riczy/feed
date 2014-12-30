@@ -1,4 +1,3 @@
-<h1>{{pageTitle}}</h1>
 <form action="">
     <div class="form-group">
         <label class="sr-only" for="title">Title</label>
@@ -13,55 +12,48 @@
     </div>
 
     <div class="recipe-edit-section" ng-repeat="section in recipe.sections" ng-init="sectionIndex = $index">
-        <div class="form-group" ng-show="section.showTitle">
+        <div class="form-group" ng-show="section.display.showTitle">
             <label class="sr-only" for="section-{{sectionIndex}}">Section Title</label>
             <input class="form-control" type="text" ng-model="section.title"
                    placeholder="Section Title" id="section-{{sectionIndex}}">
         </div>
 
-        <div ng-show="section.showIngredients">
+        <div ng-show="section.display.showIngredients">
             <h3>Ingredients</h3>
-            <div ng-repeat="ingredient in section.ingredients" ng-init="ingredientIndex = $index">
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label class="sr-only" for="quantity-{{sectionIndex}}-{ingredientIndex}}">Quantity</label>
-                        <input class="form-control" type="text" ng-model="ingredient.quantity" placeholder="Qty"
-                               id="quantity-{{sectionIndex}}-{ingredientIndex}}">
+            <ul ui-sortable class="row sortable-list" ng-model="section.ingredients">
+                <li ng-repeat="ingredient in section.ingredients" ng-init="ingredientIndex = $index">
+                    <input class="col-sm-2 col-md-2" type="text" ng-model="ingredient.quantity" placeholder="Qty"
+                           id="quantity-{{sectionIndex}}-{ingredientIndex}}">
+                    <select class="col-sm-3 col-md-3" ng-model="ingredient.measurement" ng-options="m.name as m.name for m in measurements" id="measurement-{{sectionIndex}}-{ingredientIndex}}">
+                        <option value=""></option>
+                    </select>
+                    <input  class="col-sm-6 col-md-6" type="text" ng-model="ingredient.item" placeholder="Ingredient"
+                           id="ingredient-{{sectionIndex}}-{ingredientIndex}}">
+                    <div class="col-sm-1 col-md-1">
+                        <button type="button" class="btn btn-default btn-sm"
+                                ng-click="removeIngredient(sectionIndex, ingredientIndex)" title="Remove">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label class="sr-only" for="measurement-{{sectionIndex}}-{ingredientIndex}}">Measurement</label>
-                        <input class="form-control" type="text" ng-model="ingredient.measurement"
-                               id="measurement-{{sectionIndex}}-{ingredientIndex}}">
-                    </div>
-                    <div class="form-group">
-                        <label class="sr-only" for="item-{{sectionIndex}}-{ingredientIndex}}">Item</label>
-                        <input class="form-control" type="text" ng-model="ingredient.item" placeholder="Ingredient"
-                               id="ingredient-{{sectionIndex}}-{ingredientIndex}}">
-                    </div>
-                    <button type="button" class="btn btn-default btn-sm"
-                            ng-click="removeIngredient(sectionIndex, ingredientIndex)" title="Remove">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-            </div>
-            <button type="button" class="btn btn-default btn-sm"
-                    ng-click="addIngredient(sectionIndex)">
+                </li>
+            </ul>
+            <button type="button" class="btn btn-default btn-sm" ng-click="addIngredient(sectionIndex)">
                 <span class="glyphicon glyphicon-plus"></span> Add another ingredient
             </button>
         </div>
 
-        <div ng-show="section.showSteps">
-            <h3>Steps</h3>
-            <ul ui-sortable ng-model="section.steps" class="sortable-list">
+        <div ng-show="section.display.showSteps">
+            <h3>Preparation</h3>
+            <ul ui-sortable class="row sortable-list" ng-model="section.steps">
                 <li class="form-inline" ng-repeat="step in section.steps" ng-init="stepIndex = $index">
-                    <div class="form-group">
-                        <label class="sr-only" for="step-{{sectionIndex}}-{{stepIndex}}">Step</label>
-                        <textarea class="form-control" rows="2" ng-model="step.text"
-                                  placeholder="Step" ng-trim="true" id="step-{{sectionIndex}}-{{stepIndex}}"></textarea>
+                    <textarea class="col-sm-11 col-md-11" rows="2" ng-model="step.text"
+                              placeholder="Step" ng-trim="true" id="step-{{sectionIndex}}-{{stepIndex}}">
+                    </textarea>
+                    <div class="col-sm-1 col-md-1">
+                        <button class="btn btn-default btn-sm" type="button" ng-click="removeStep(sectionIndex, stepIndex)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
                     </div>
-                    <button class="btn btn-default btn-sm" type="button" ng-click="removeStep(sectionIndex, stepIndex)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
                 </li>
             </ul>
             <button type="button" class="btn btn-default btn-sm" ng-click="addStep(sectionIndex)">

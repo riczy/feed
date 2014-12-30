@@ -1,32 +1,74 @@
 feed.app.factory('RecipeService', 
-	['$http', function($http){
-      
-      var resourceUrl = 'api/recipes';
-      
+    ['$http', function($http){
+
+        var resourceUrl = 'api/recipes';
+
+        return {
+            /* Creates a new recipe.
+             *
+             * @param   recipeObj {feed.model.recipe} The recipe object to save.
+             *          Required.
+             * @return  The promise object of the http ajax call. This allows the
+             *          caller to chain onsuccess and onerror functions.
+             */
+            create : function(recipeObj) {
+                return $http.post(resourceUrl, recipeObj);
+            },
+            /* Saves an existing recipe.
+             *
+             * @param   recipeObj {feed.model.recipe} The recipe object to save.
+             *          Required.
+             * @return  The promise object of the http ajax call. This allows the
+             *          caller to chain onsuccess and onerror functions.
+             */
+            save : function(recipeObj) {
+                return $http.put(resourceUrls, recipeObj);
+            }
+        };
+    }]
+);
+
+feed.app.factory('MeasurementService',
+    ['$http', function($http) {
+
+        var resourceUrl = 'api/measurements';
+
+        return {
+            /* Returns all the default measurement types in the system.
+             *
+             * @return  A promise object that upon success contains an array of
+             *          measurements.
+             */
+            getAll : function() {
+                return $http.get(resourceUrl);
+            }
+        };
+    }]
+);
+
+feed.app.factory('ErrorService',
+    [ function() {
+
       return {
-         /**
-          * Creates a new recipe.
-          * 
-          * @param   recipeObj {feed.model.recipe} The recipe object to save.
-          *          Required.
-          * @returns The promise object of the http ajax call. This allows the
-          *          caller to chain onsuccess and onerror functions.
-          */
-         create : function(recipeObj) {
-            return $http.post(resourceUrl, recipeObj);
+         title : "",
+         message : "",
+         getMessage : function() {
+            return this.message;
          },
-         
-         /**
-          * Saves an existing recipe.
-          * 
-          * @param   recipeObj {feed.model.recipe} The recipe object to save.
-          *          Required.
-          * @returns The promise object of the http ajax call. This allows the
-          *          caller to chain onsuccess and onerror functions.
-          */
-         save : function(recipeObj) {
-            return $http.put(resourceUrls, recipeObj);
+         setMessage : function(message) {
+            this.message = message;
+         },
+         getTitle : function() {
+            return this.title;
+         },
+         setTitle : function(title) {
+            this.title = title;
+         },
+         reset : function() {
+            this.title = "";
+            this.message = "";
          }
       };
+
    }]
-   );
+);

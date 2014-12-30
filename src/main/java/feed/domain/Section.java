@@ -19,9 +19,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class Section implements Serializable {
 
    private static final long serialVersionUID = 1L;
+
    private String title;
    private List<Ingredient> ingredients;
    private List<Step> steps;
+   private SectionDisplay display;
    
    public String getTitle() {
       return title;
@@ -84,5 +86,12 @@ public class Section implements Serializable {
    public void setSteps(List<Step> steps) {
       this.steps = steps;
    }
-   
+
+   public SectionDisplay getDisplay() {
+      return display;
+   }
+
+   public void setDisplay(SectionDisplay display) {
+      this.display = display;
+   }
 }

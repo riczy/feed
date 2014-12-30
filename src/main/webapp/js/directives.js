@@ -7,14 +7,14 @@
  * <input wh-enterup="doSomething()">
  */
 feed.app.directive('whEnterup', function() {
-      return function(scope, element, attrs) {
-         element.bind('keyup', function(event) {
+    return function(scope, element, attrs) {
+        element.bind('keyup', function(event) {
             if (event.which == '13') {
-               scope.$apply(attrs.whEnterup);
+                scope.$apply(attrs.whEnterup);
             }
-         });
-      };
-   });
+        });
+    };
+});
    
 /**
  * @description
@@ -25,13 +25,14 @@ feed.app.directive('whEnterup', function() {
  * <input wh-keyup="doSomething()" keys="[27,13]">
  */
 feed.app.directive('whKeyup', function() {
-      return function(scope, element, attrs) {
-         function applyKeyup() {
-            scope.$apply(attrs.whKeyup);
-         };
-         
-         var allowedKeys = scope.$eval(attrs.keys);
-         element.bind('keyup', function(event) {
+    return function(scope, element, attrs) {
+
+        function applyKeyup() {
+           scope.$apply(attrs.whKeyup);
+        };
+
+        var allowedKeys = scope.$eval(attrs.keys);
+        element.bind('keyup', function(event) {
             if (!allowedKeys || allowedKeys.length == 0) {
                 applyKeyup();
             } else {
@@ -41,6 +42,6 @@ feed.app.directive('whKeyup', function() {
                     }
                 });
             }
-         });
-      };
-   });
+        });
+    };
+});

@@ -6,10 +6,13 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.annotations.SerializedName;
+import org.bson.types.ObjectId;
 
 /**
  * <p>
@@ -22,17 +25,35 @@ public class Recipe implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   private Long uuid;
+   @XmlElement
+   private ObjectId id;
+
+   @XmlElement
+   private String format;
+
+   @XmlElement
    private String title;
+
+   @XmlElement
    private String description;
+
+   @XmlElement
    private List<Section> sections;
-   
-   public Long getUuid() {
-      return uuid;
+
+   public ObjectId getId() {
+      return id;
    }
 
-   public void setUuid(Long id) {
-      this.uuid = id;
+   public void setId(ObjectId id) {
+      this.id = id;
+   }
+
+   public String getFormat() {
+      return format;
+   }
+
+   public void setFormat(String format) {
+      this.format = format;
    }
 
    public String getTitle() {

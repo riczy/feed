@@ -1,5 +1,8 @@
 package feed.domain;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,5 +28,15 @@ public class Measurement implements Serializable {
    public void setName(String name) {
       this.name = name;
    }
-   
+
+   public String toJson() {
+      Gson gson = new Gson();
+      return gson.toJson(this);
+   }
+
+   public static Measurement toObject(String json) throws JsonSyntaxException {
+      Gson gson = new Gson();
+      return gson.fromJson(json, Measurement.class);
+   }
+
 }

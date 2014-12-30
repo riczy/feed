@@ -13,6 +13,11 @@ feed.app.config(
         function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/');
             $stateProvider.
+                state('error', {
+                    url: '/error',
+                    templateUrl: 'partials/error.html',
+                    controller: 'ErrorController'
+                }).
                 state('home', {
                     url: '/'
                 }).
@@ -48,7 +53,7 @@ feed.app.config(
                 }).
                 state('recipe-view', {
                     url: '/recipe/{id}',
-                    templateUrl: 'partials/recipe.html',
+                    templateUrl: 'partials/recipe-view.html',
                     controller: 'RecipeViewController'
                 }).
                 state('recipe-search', {

@@ -25,15 +25,12 @@ public class DatabaseClient {
       }
    }
    
-   static MongoClient getClient() throws IOException {
-      return new MongoClient();
+   static MongoClient getClient() {
+      return client;
    }
    
-   static DB getDB() throws IOException {
+   static DB getDB() {
       return getClient().getDB("feed");
    }
    
-   private DatabaseClient() throws UnknownHostException {
-   }
-
 }
