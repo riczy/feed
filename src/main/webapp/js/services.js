@@ -22,7 +22,15 @@ feed.app.factory('RecipeService',
              *          caller to chain onsuccess and onerror functions.
              */
             save : function(recipeObj) {
-                return $http.put(resourceUrls, recipeObj);
+                return $http.put(resourceUrl, recipeObj);
+            },
+            /* Searches for recipes containing the given text.
+             *
+             * @param   text {String} The free text value for searching. Required.
+             */
+            search : function(text) {
+                var queryParams = "text=" + encodeURI(text);
+                return $http.get(resourceUrl + "/search?" + queryParams);
             }
         };
     }]

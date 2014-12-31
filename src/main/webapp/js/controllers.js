@@ -1,8 +1,21 @@
-feed.app.controller('RecipeSearchController', ['$scope',
-    function ($scope) {
-        $scope.text = "";
-        $scope.search = function () {
+feed.app.controller('RecipeSearchController', ['$scope', '$location', 'RecipeService', 'ErrorService',
+    function ($scope, $location, RecipeService, ErrorService) {
 
+        $scope.text = "";
+        $scope.results = [];
+
+        $scope.search = function () {
+            $scope.results = [];
+            RecipeService
+                .search($scope.text)
+                .success(function (data, status) {
+                    $scope.results = data;
+                })
+                .error(function (data, status) {
+                    ErrorService.setTitle("An error occurred when searching for recipes.");
+                    ErrorService.setMessage(data);
+                    $location.path("/error");
+                });
         };
     }
 ]);

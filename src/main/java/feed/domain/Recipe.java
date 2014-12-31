@@ -25,20 +25,12 @@ public class Recipe implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   @XmlElement
    private ObjectId id;
-
-   @XmlElement
    private String format;
-
-   @XmlElement
    private String title;
-
-   @XmlElement
    private String description;
-
-   @XmlElement
    private List<Section> sections;
+   private List<String> hashtags;
 
    public ObjectId getId() {
       return id;
@@ -76,7 +68,7 @@ public class Recipe implements Serializable {
       
       if (section == null) return false;
       if (this.sections == null) {
-         this.sections = new ArrayList<Section>();
+         this.sections = new ArrayList<>();
       }
       return this.sections.add(section);
    }
@@ -88,7 +80,24 @@ public class Recipe implements Serializable {
    public void setSections(List<Section> sections) {
       this.sections = sections;
    }
-   
+
+   public boolean add(String hashtag) {
+
+      if (hashtag == null || hashtag.isEmpty()) return false;
+      if (this.hashtags == null) {
+         this.hashtags = new ArrayList<>();
+      }
+      return this.hashtags.add(hashtag);
+   }
+
+   public List<String> getHashtags() {
+      return hashtags;
+   }
+
+   public void setHashtags(List<String> hashtags) {
+      this.hashtags = hashtags;
+   }
+
    public String toJson() {
       Gson gson = new Gson();
       return gson.toJson(this);
