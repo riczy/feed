@@ -20,13 +20,22 @@ public class Measurement implements Serializable {
 
    private static final long serialVersionUID = 1L;
    private String name;
-   
+   private int sortOrder;
+
    public String getName() {
       return name;
    }
    
    public void setName(String name) {
       this.name = name;
+   }
+
+   public int getSortOrder() {
+      return sortOrder;
+   }
+
+   public void setSortOrder(int sortOrder) {
+      this.sortOrder = sortOrder;
    }
 
    public String toJson() {

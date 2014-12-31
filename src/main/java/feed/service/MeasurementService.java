@@ -1,5 +1,6 @@
 package feed.service;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -39,7 +40,7 @@ public class MeasurementService {
     public List<Measurement> fetchAll() {
 
         ArrayList<Measurement> results = new ArrayList<>();
-        DBCursor cursor = collection.find();
+        DBCursor cursor = collection.find().sort(new BasicDBObject("sortOrder", 1));
         Iterator<DBObject> iterator = cursor.iterator();
         while (iterator.hasNext()) {
             results.add(Measurement.toObject(iterator.next().toString()));
