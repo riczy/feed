@@ -46,6 +46,11 @@ feed.app.config(
                         type: 'tpr'
                     }
                 }).
+                state('recipe-search', {
+                    url: '/recipe/search',
+                    templateUrl: 'partials/recipe-search.html',
+                    controller: 'RecipeSearchController'
+                }).
                 state('recipe-edit', {
                     url: '/recipe/{id}/edit',
                     templateUrl: 'partials/recipe-edit.html',
@@ -55,12 +60,8 @@ feed.app.config(
                     url: '/recipe/{id}',
                     templateUrl: 'partials/recipe-view.html',
                     controller: 'RecipeViewController'
-                }).
-                state('recipe-search', {
-                    url: '/recipe/search',
-                    templateUrl: 'partials/recipe-search.html',
-                    controller: 'RecipeSearchController'
-                });
+                })
+                ;
         }
     ]
 );
