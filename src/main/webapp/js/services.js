@@ -1,7 +1,7 @@
 feed.app.factory('RecipeService', 
     ['$http', function($http){
 
-        var resourceUrl = 'api/recipes';
+        var resourceUrl = 'api/recipe';
 
         return {
             /* Creates a new recipe.
@@ -39,7 +39,7 @@ feed.app.factory('RecipeService',
 feed.app.factory('MeasurementService',
     ['$http', function($http) {
 
-        var resourceUrl = 'api/measurements';
+        var resourceUrl = 'api/measurement';
 
         return {
             /* Returns all the default measurement types in the system.

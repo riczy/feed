@@ -27,7 +27,7 @@ import feed.service.RecipeService;
  * The RESTful resource for managing recipes.
  * </p>
  */
-@Path("/recipes")
+@Path("/recipe")
 @Produces("application/json")
 public class RecipeResource {
 

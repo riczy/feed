@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <p>
  * The service manager for handling persistence for recipe objects.
  * </p>
  */
@@ -44,7 +43,6 @@ public class RecipeService {
    }
 
    /**
-    * <p>
     * Saves the given recipe instance to a persistent store.
     * </p>
     * 
@@ -64,7 +62,6 @@ public class RecipeService {
    }
    
    /**
-    * <p>
     * Returns the recipe instance that is uniquely identified by the give id.
     * If no matching instance exists then null is returned.
     * </p>
@@ -80,16 +77,23 @@ public class RecipeService {
       return Recipe.toObject(result.toString());
    }
 
+   /**
+    *
+    * @param searchParameters
+    * @return
+    */
    public List<Recipe> search(SearchParameters searchParameters) {
 
       ArrayList<Recipe> results = new ArrayList<>();
 
       // TODO: add limit & skip
+      /*
       BasicDBList orValues = new BasicDBList();
       orValues.add(new BasicDBObject("title", searchParameters.getText()));
       orValues.add(new BasicDBObject("description", searchParameters.getText()));
       DBObject query = new BasicDBObject("$or", orValues);
-
+      */
+      DBObject query = new BasicDBObject("$text", new BasicDBObject("$search", searchParameters.getText()));
       DBCursor cursor = collection.find(query);
       Iterator<DBObject> iterator = cursor.iterator();
       while (iterator.hasNext()) {

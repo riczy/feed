@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
  * Provides the service interface to the processing for measurements.
  * </p>
  */
-@Path("/measurements")
+@Path("/measurement")
 @Produces("application/json")
 public class MeasurementResource {
 
