@@ -15,17 +15,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class Step implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   private Integer order;
    private String text;
-   
-   public Integer getOrder() {
-      return order;
-   }
-   
-   public void setOrder(Integer order) {
-      this.order = order;
-   }
-   
+
    public String getText() {
       return text;
    }

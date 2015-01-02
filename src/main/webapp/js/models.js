@@ -11,14 +11,14 @@ feed.model.recipe.initialize = function (format) {
     var obj = feed.model.recipe.create(format);
 
     if (format == feed.model.recipe.TPI) {
-        obj.addSection(2, 0, true, true, false);
-        obj.addSection(2, 0, true, true, false);
-        obj.addSection(0, 2, false, false, true);
+        obj.createNewSection(2, 0, true, true, false);
+        obj.createNewSection(2, 0, true, true, false);
+        obj.createNewSection(0, 2, false, false, true);
     } else if (format == feed.model.recipe.TPR) {
-        obj.addSection(2, 2, true, true, true);
-        obj.addSection(2, 2, true, true, true);
+        obj.createNewSection(2, 2, true, true, true);
+        obj.createNewSection(2, 2, true, true, true);
     } else {
-        obj.addSection(2, 2, false, true, true);
+        obj.createNewSection(2, 2, false, true, true);
     }
 
     return obj;
@@ -33,7 +33,14 @@ feed.model.recipe.create = function (data) {
             this.format = data.format || feed.model.recipe.SIMPLE;
             this.title = data.title || "";
             this.description = data.description || "";
-            this.sections = data.sections || [];
+            this.createdDate = data.createdDate || null;
+            this.modifiedDate = data.modifiedDate || null;
+            this.sections = [];
+            if (data.sections) {
+                for (var i = 0; i < data.sections.length; i++) {
+                    this.addSection(data.sections[i]);
+                }
+            }
         },
         /* Sets the id of this instance.
          *
@@ -55,30 +62,41 @@ feed.model.recipe.create = function (data) {
             }
             return this;
         },
-        createSection: function (showTitle, showIngredients, showSteps) {
-            return {
-                display : {
-                    showTitle: showTitle,
-                    showIngredients: showIngredients,
-                    showSteps : showSteps
+        /* Adds a section to this recipe instance. Uses the data values to set
+         * the section object with data.
+         *
+         * @param   data {Object} The section object used to fill out this section.
+         *
+         */
+        addSection: function (data) {
+            data = data || {};
+            data.display = data.display || {};
+
+            var section = {
+                display: {
+                    showTitle: (feed.isNone(data.display.showTitle)) ? false : data.display.showTitle,
+                    showIngredients: (feed.isNone(data.display.showIngredients)) ? false : data.display.showIngredients,
+                    showSteps : (feed.isNone(data.display.showSteps)) ? false : data.display.showSteps
                 },
-                title: "",
+                title: data.title || "",
                 ingredients: [],
                 steps: [],
-                addIngredient: function (item, quantity, measurement) {
+                addIngredient: function (data) {
+                    data = data || {};
                     this.ingredients.push({
-                        quantity: quantity || "",
-                        measurement: measurement || "",
-                        item: item || "",
+                        quantity: data.quantity || "",
+                        measurement: data.measurement || "",
+                        item: data.item || "",
                         isEmpty: function () {
                             return feed.isEmpty(this.quantity) &&
                                 feed.isEmpty(this.measurement) && feed.isEmpty(this.item);
                         }
                     });
                 },
-                addStep: function (text) {
+                addStep: function (data) {
+                    data = data || {};
                     this.steps.push({
-                        text: text || "",
+                        text: data.text || "",
                         isEmpty: function () {
                             return feed.isEmpty(this.text);
                         }
@@ -111,32 +129,25 @@ feed.model.recipe.create = function (data) {
 
                     return (this.title && this.steps.length == 0
                         && this.ingredients.length == 0) ? null : this;
-
                 }
-                /*
-                compressedCopy: function () {
-                    function compress(collection) {
-                        var compressedCollection = [];
-                        for (var i = 0; i < collection.length; i++) {
-                            if (!collection[i].isEmpty()) {
-                                compressedCollection.push(collection[i]);
-                            }
-                        }
-                        return compressedCollection;
-                    };
-                    var obj = { title: this.title };
-                    obj.steps = compress(this.steps);
-                    obj.ingredients = compress(this.ingredients);
-
-                    return (obj.title && obj.steps.length == 0
-                        && obj.ingredients.length == 0) ? null : obj;
-                }
-                */
             };
+
+            if (data.ingredients) {
+                for (var i = 0; i < data.ingredients.length; i++) {
+                    section.addIngredient(data.ingredients[i]);
+                }
+            }
+            if (data.steps) {
+                for (var i = 0; i < data.steps.length; i++) {
+                    section.addStep(data.steps[i]);
+                }
+            }
+            this.sections.push(section);
             return section;
         },
         /**
-         * Adds a section to this recipe instance.
+         * Creates a new a section to this recipe instance that contains no
+         * values.
          *
          * @param   ingredientCount {Number} Optional. The number of blank ingredient
          *          objects to add to the section.
@@ -150,15 +161,20 @@ feed.model.recipe.create = function (data) {
          *          if the section's step is displayed in the UI.
          * @returns {Number} The index of the section that was added.
          */
-        addSection: function (ingredientCount, stepCount, showTitle, showIngredients, showSteps) {
-            var section = this.createSection(showTitle, showIngredients, showSteps);
+        createNewSection: function (ingredientCount, stepCount, showTitle, showIngredients, showSteps) {
+            var section = this.addSection({
+                display : {
+                    showTitle : feed.isNone(showTitle) ? false : showTitle,
+                    showIngredients : feed.isNone(showIngredients) ? false : showIngredients,
+                    showSteps : feed.isNone(showSteps) ? false : showSteps }});
+
             if (ingredientCount) {
                 for (var i = 0; i < ingredientCount; i++) section.addIngredient();
             }
             if (stepCount) {
                 for (i = 0; i < stepCount; i++) section.addStep();
             }
-            this.sections.push(section);
+
             return this.sections.length - 1;
         },
         hasSection: function (index) {

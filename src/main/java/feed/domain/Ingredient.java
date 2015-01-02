@@ -14,18 +14,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class Ingredient implements Serializable {
 
    private static final long serialVersionUID = 1L;
-   private Integer order;
    private String quantity;
    private String measurement;
    private String item;
-   
-   public Integer getOrder() {
-      return order;
-   }
-
-   public void setOrder(Integer sortOrder) {
-      this.order = sortOrder;
-   }
    
    public String getQuantity() {
       return quantity;

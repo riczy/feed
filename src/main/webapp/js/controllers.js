@@ -33,9 +33,6 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'Re
                 $scope.measurements = [{name: "tablespoon"},{name: "teaspoon"},{name: "cup"}];
             });
 
-        $scope.addSection = function () {
-            $scope.recipe.addSection(3, 1);
-        };
         $scope.addIngredient = function (sectionIndex) {
             $scope.recipe.addIngredient(sectionIndex);
         };
@@ -48,11 +45,14 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'Re
         $scope.removeStep = function (sectionIndex, stepIndex) {
             $scope.recipe.removeStep(sectionIndex, stepIndex);
         };
-        $scope.create = function () {
-            RecipeService
-                .create($scope.recipe.asApiObject())
+        $scope.save = function () {
+            var obj = $scope.recipe.asApiObject();
+            var response = ($scope.recipe.id) ?
+                RecipeService.update(obj) : RecipeService.create(obj);
+
+            response
                 .success(function (data, status) {
-                    $scope.recipe.setId(data);
+                    $scope.recipe.setObject(data);
                 })
                 .error(function (data, status) {
                     ErrorService.setTitle("An error occurred when saving the recipe.");

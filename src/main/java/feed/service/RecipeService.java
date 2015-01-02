@@ -17,6 +17,7 @@ import com.mongodb.util.JSON;
 import feed.domain.Recipe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,15 +51,26 @@ public class RecipeService {
     * @return  The unique id of the instance that was inserted.
     * @throws  RuntimeException If the insert failed.
     */
-   public ObjectId save(Recipe recipe) {
+   public Recipe save(Recipe recipe) {
+
+      boolean isNew = false;
+      Date now = new Date();
+      WriteResult result;
 
       if (recipe.getId() == null) {
          recipe.setId(new ObjectId());
+         recipe.setCreatedDate(now);
+         isNew = true;
       }
+      recipe.setModifiedDate(now);
       DBObject dbObj = (DBObject)JSON.parse(recipe.toJson());
-      WriteResult result = collection.insert(dbObj, WriteConcern.ACKNOWLEDGED);
-      logger.debug("The recipe save result for id #{}: {}", recipe.getId(), result);
-      return recipe.getId();
+
+      result = isNew ?
+              collection.insert(dbObj, WriteConcern.ACKNOWLEDGED) :
+              collection.update(new BasicDBObject("_id", recipe.getId()), dbObj);
+
+      logger.debug("The save result for recipe id #{}: {}", recipe.getId(), result);
+      return recipe;
    }
    
    /**
@@ -87,12 +99,6 @@ public class RecipeService {
       ArrayList<Recipe> results = new ArrayList<>();
 
       // TODO: add limit & skip
-      /*
-      BasicDBList orValues = new BasicDBList();
-      orValues.add(new BasicDBObject("title", searchParameters.getText()));
-      orValues.add(new BasicDBObject("description", searchParameters.getText()));
-      DBObject query = new BasicDBObject("$or", orValues);
-      */
       DBObject query = new BasicDBObject("$text", new BasicDBObject("$search", searchParameters.getText()));
       DBCursor cursor = collection.find(query);
       Iterator<DBObject> iterator = cursor.iterator();

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -34,26 +35,47 @@ public class RecipeResource {
    protected final static Logger logger = LoggerFactory.getLogger(RecipeResource.class.getName());
    
    /**
-    * Saves the given recipe.
+    * Creates the given recipe.
     * </p>
     * 
-    * @param   recipe A JSON object of the recipe.
-    * @return  The unique id of the instance that was created wrapped inside
-    *          of a Response object.
+    * @param   recipe The recipe to create. Required.
+    * @return  The recipe object that was created wrapped inside of a Response
+    *          object.
     */
    @POST
    @Consumes("application/json")
    public Response create(Recipe recipe) {
       
       try {
-         ObjectId savedObjId = RecipeService.getInstance().save(recipe);
-         return Response.status(Status.CREATED).entity(savedObjId.toString()).build();
+         recipe = RecipeService.getInstance().save(recipe);
+         return Response.status(Status.CREATED).entity(recipe).build();
       } catch (Exception e) {
          logger.error("An error occurred while creating a recipe.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
    }
-   
+
+   /**
+    * Updates the given recipe.
+    * </p>
+    *
+    * @param   recipe The recipe to update. Required.
+    * @return  The recipe object that was updated wrapped inside of a Response
+    *          object.
+    */
+   @PUT
+   @Consumes("application/json")
+   public Response update(Recipe recipe) {
+
+      try {
+         recipe = RecipeService.getInstance().save(recipe);
+         return Response.status(Status.OK).entity(recipe).build();
+      } catch (Exception e) {
+         logger.error("An error occurred while creating a recipe.", e);
+         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+      }
+   }
+
    /**
     * Returns the recipe instance that is uniquely identified by the give id.
     * If no matching instance exists then null is returned.

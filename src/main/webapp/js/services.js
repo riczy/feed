@@ -21,7 +21,7 @@ feed.app.factory('RecipeService',
              * @return  The promise object of the http ajax call. This allows the
              *          caller to chain onsuccess and onerror functions.
              */
-            save : function(recipeObj) {
+            update : function(recipeObj) {
                 return $http.put(resourceUrl, recipeObj);
             },
             /* Searches for recipes containing the given text.

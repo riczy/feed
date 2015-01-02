@@ -15,11 +15,11 @@ public class RecipeTest {
       
       Section s = new Section();
       s.setTitle("Section");
-      s.add(1, "1", "cup", "parsely");
-      s.add(2, null, "handful", "sesame seeds");
-      s.add(2, "3", null, "lemons");
-      s.add(1, "Step 1");
-      s.add(2, "Step 2");
+      s.add("1", "cup", "parsely");
+      s.add(null, "handful", "sesame seeds");
+      s.add("3", null, "lemons");
+      s.add("Step 1");
+      s.add("Step 2");
       r.add(s);
       
       String json = r.toJson();

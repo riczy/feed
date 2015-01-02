@@ -39,12 +39,11 @@ public class Section implements Serializable {
       return this.ingredients.add(ingredient);
    }
    
-   boolean add(Integer order, String quantity, String measurement, String item) {
+   boolean add(String quantity, String measurement, String item) {
       
       Ingredient i = new Ingredient();
       i.setItem(item);
       i.setMeasurement(measurement);
-      i.setOrder(order);
       i.setQuantity(quantity);
       return this.add(i);
    }
@@ -59,10 +58,9 @@ public class Section implements Serializable {
       return this.steps.add(step);
    }
    
-   boolean add(Integer order, String text) {
+   boolean add(String text) {
       
       Step s = new Step();
-      s.setOrder(order);
       s.setText(text);
       return this.add(s);
    }

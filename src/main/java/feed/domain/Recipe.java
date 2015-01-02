@@ -2,6 +2,7 @@ package feed.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -29,6 +30,8 @@ public class Recipe implements Serializable {
    private String format;
    private String title;
    private String description;
+   private Date createdDate;
+   private Date modifiedDate;
    private List<Section> sections;
    private List<String> hashtags;
 
@@ -63,7 +66,23 @@ public class Recipe implements Serializable {
    public void setDescription(String description) {
       this.description = description;
    }
-   
+
+   public Date getCreatedDate() {
+      return createdDate;
+   }
+
+   public void setCreatedDate(Date createdDate) {
+      this.createdDate = createdDate;
+   }
+
+   public Date getModifiedDate() {
+      return modifiedDate;
+   }
+
+   public void setModifiedDate(Date modifiedDate) {
+      this.modifiedDate = modifiedDate;
+   }
+
    public boolean add(Section section) {
       
       if (section == null) return false;
