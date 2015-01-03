@@ -11,6 +11,11 @@
     </div>
   </div>
 </div>
-<pre>{{results | json}}</pre>
+<h2>Results</h2>
+<div ng-repeat="recipe in results"><a ng-href="#/recipe/{{recipe.id}}">{{recipe.title}}</a></div>
 <!--
+<div ng-repeat="recipe in results"><a href ng-click="view('{{recipe.id}}')">{{recipe.title}}</a></div>
+-->
+<!--
+<pre>{{results | json}}</pre>
 -->

@@ -31,6 +31,13 @@ feed.app.factory('RecipeService',
             search : function(text) {
                 var queryParams = "text=" + encodeURI(text);
                 return $http.get(resourceUrl + "/search?" + queryParams);
+            },
+            /* Finds the recipe object that is identified by the id given.
+             *
+             * @param   id {String} The unique identifier of the recipe to fetch.
+             */
+            fetch : function(id) {
+                return $http.get(resourceUrl + "/" + id);
             }
         };
     }]

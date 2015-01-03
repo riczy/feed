@@ -7,7 +7,7 @@
     </layout>
   </appender>
    
-  <logger name="com.base22" level="TRACE"/>
+  <logger name="feed" level="debug"/>
  
   <root level="debug">
     <appender-ref ref="STDOUT" />

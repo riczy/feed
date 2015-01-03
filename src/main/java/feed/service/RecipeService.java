@@ -58,7 +58,7 @@ public class RecipeService {
       WriteResult result;
 
       if (recipe.getId() == null) {
-         recipe.setId(new ObjectId());
+         recipe.setId(new ObjectId().toString());
          recipe.setCreatedDate(now);
          isNew = true;
       }
@@ -86,7 +86,7 @@ public class RecipeService {
 
       DBObject query = new BasicDBObject("_id", id);
       DBObject result = collection.findOne(query);
-      return Recipe.toObject(result.toString());
+      return result == null ? null : Recipe.toObject(result.toString());
    }
 
    /**

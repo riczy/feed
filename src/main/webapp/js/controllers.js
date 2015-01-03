@@ -17,6 +17,10 @@ feed.app.controller('RecipeSearchController', ['$scope', '$location', 'RecipeSer
                     $location.path("/error");
                 });
         };
+        $scope.view = function(id) {
+            $location.path("recipe/" + id);
+        };
+
     }
 ]);
 
@@ -70,8 +74,21 @@ feed.app.controller('RecipeEditController', ['$scope', '$stateParams',
     }
 ]);
 
-feed.app.controller('RecipeViewController', ['$scope',
-    function ($scope) {
+feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$location', 'RecipeService', 'ErrorService',
+    function ($scope, $stateParams, $location, RecipeService, ErrorService) {
+
+        $scope.recipe = {};
+
+        RecipeService
+            .fetch($stateParams.id)
+            .success(function (data, status) {
+                $scope.recipe = data;
+            })
+            .error(function (data, status) {
+                ErrorService.setTitle("An error occurred when searching for the recipe.");
+                ErrorService.setMessage(data);
+                $location.path("/error");
+            });
 
     }
 ]);

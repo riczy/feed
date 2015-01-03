@@ -26,7 +26,8 @@ public class Recipe implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   private ObjectId id;
+   @SerializedName("_id")
+   private String id;
    private String format;
    private String title;
    private String description;
@@ -35,11 +36,11 @@ public class Recipe implements Serializable {
    private List<Section> sections;
    private List<String> hashtags;
 
-   public ObjectId getId() {
+   public String getId() {
       return id;
    }
 
-   public void setId(ObjectId id) {
+   public void setId(String id) {
       this.id = id;
    }
 

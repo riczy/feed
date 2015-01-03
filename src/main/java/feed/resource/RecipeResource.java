@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
@@ -83,12 +84,23 @@ public class RecipeResource {
     * 
     * @param   id The unique id of the recipe instance to find. Required.
     * @return  The recipe that is uniquely identified by the given id or null
-    *          if no matching recipe is found.
+    *          if no matching recipe is found. The result is wrapped in a
+    *          Response object.
     */
    @GET
    @Path("/{id}")
-   public Recipe find(String id) {
-      return RecipeService.getInstance().find(id);
+   public Response find(@PathParam("id") String id) {
+
+      try {
+         Recipe recipe = RecipeService.getInstance().find(id);
+         if (recipe == null) {
+            return Response.status(Status.NOT_FOUND).entity("Not Found").build();
+         }
+         return Response.status(Status.OK).entity(recipe).build();
+      } catch (Exception e) {
+         logger.error("An error occurred while creating a recipe.", e);
+         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+      }
    }
 
    /**
