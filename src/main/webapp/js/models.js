@@ -31,8 +31,8 @@ feed.model.recipe.create = function (data) {
             var data = data || {};
             this.id = data.id || null;
             this.format = data.format || feed.model.recipe.SIMPLE;
-            this.title = data.title || "";
-            this.description = data.description || "";
+            this.title = data.title || null;
+            this.description = data.description || null;
             this.createdDate = data.createdDate || null;
             this.modifiedDate = data.modifiedDate || null;
             this.sections = [];
@@ -78,15 +78,15 @@ feed.model.recipe.create = function (data) {
                     showIngredients: (feed.isNone(data.display.showIngredients)) ? false : data.display.showIngredients,
                     showSteps : (feed.isNone(data.display.showSteps)) ? false : data.display.showSteps
                 },
-                title: data.title || "",
+                title: data.title || null,
                 ingredients: [],
                 steps: [],
                 addIngredient: function (data) {
                     data = data || {};
                     this.ingredients.push({
-                        quantity: data.quantity || "",
-                        measurement: data.measurement || "",
-                        item: data.item || "",
+                        quantity: data.quantity || null,
+                        measurement: data.measurement || null,
+                        item: data.item || null,
                         isEmpty: function () {
                             return feed.isEmpty(this.quantity) &&
                                 feed.isEmpty(this.measurement) && feed.isEmpty(this.item);
@@ -96,7 +96,7 @@ feed.model.recipe.create = function (data) {
                 addStep: function (data) {
                     data = data || {};
                     this.steps.push({
-                        text: data.text || "",
+                        text: data.text || null,
                         isEmpty: function () {
                             return feed.isEmpty(this.text);
                         }
