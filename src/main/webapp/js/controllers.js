@@ -1,22 +1,31 @@
-feed.app.controller('RecipeSearchController', ['$scope', '$location', 'RecipeService', 'ErrorService',
-    function ($scope, $location, RecipeService, ErrorService) {
+feed.app.controller('MainController', ['$scope', '$location',
+    function ($scope, $location) {
 
         $scope.text = "";
-        $scope.results = [];
 
         $scope.search = function () {
-            $scope.results = [];
-            RecipeService
-                .search($scope.text)
-                .success(function (data, status) {
-                    $scope.results = data;
-                })
-                .error(function (data, status) {
-                    ErrorService.setTitle("An error occurred when searching for recipes.");
-                    ErrorService.setMessage(data);
-                    $location.path("/error");
-                });
-        };
+            if ($scope.text) {
+                $location.path("recipe/search?text="+$scope.text);
+            }
+        }
+    }
+]);
+
+feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$location', 'RecipeService', 'ErrorService',
+    function ($scope, $stateParams, $location, RecipeService, ErrorService) {
+
+        $scope.results = [];
+
+        RecipeService
+            .search($stateParams.text)
+            .success(function (data, status) {
+                $scope.results = data;
+            })
+            .error(function (data, status) {
+                ErrorService.setTitle("An error occurred when searching for recipes.");
+                ErrorService.setMessage(data);
+                $location.path("/error");
+            });
         $scope.view = function(id) {
             $location.path("recipe/" + id);
         };

@@ -7,11 +7,21 @@ body {
 header, footer, div#content  {
    	padding: 0px 25px;
 }
+/*
+ NAVIGATION BAR
+ */
 .app-title {
 	font-family: 'Lobster', cursive;
 	font-size: 30px;
 	color: black;
 }
+.nav > li > input {
+	margin: 8px 0px;
+}
+
+/*
+ RECIPE
+ */
 ul.sortable-list {
 	list-style: none outside none;
 	margin: 10px 0 30px;

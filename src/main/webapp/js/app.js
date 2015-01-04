@@ -47,7 +47,7 @@ feed.app.config(
                     }
                 }).
                 state('recipe-search', {
-                    url: '/recipe/search',
+                    url: '/recipe/search?text&limit&skip',
                     templateUrl: 'partials/recipe-search.html',
                     controller: 'RecipeSearchController'
                 }).
