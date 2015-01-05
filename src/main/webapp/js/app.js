@@ -28,7 +28,6 @@ feed.app.config(
                     data: {
                         type: 'simple'
                     }
-
                 }).
                 state('recipe-add-tpi', {
                     url: '/recipe/tpi/new',
@@ -48,7 +47,7 @@ feed.app.config(
                 }).
                 state('recipe-search', {
                     url: '/recipe/search?text&limit&skip',
-                    templateUrl: 'partials/recipe-search.html',
+                    templateUrl: 'partials/recipe-list.html',
                     controller: 'RecipeSearchController'
                 }).
                 state('recipe-edit', {

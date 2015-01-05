@@ -5,7 +5,7 @@ feed.app.controller('MainController', ['$scope', '$location',
 
         $scope.search = function () {
             if ($scope.text) {
-                $location.path("recipe/search?text="+$scope.text);
+                $location.url("recipe/search?text="+$scope.text);
             }
         }
     }
@@ -36,7 +36,7 @@ feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$locat
 feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'RecipeService', 'MeasurementService', 'ErrorService',
     function ($scope, $state, $location, RecipeService, MeasurementService, ErrorService) {
 
-        $scope.recipe = feed.model.recipe.initialize($state.current.data.type);
+        $scope.recipe = feed.model.recipe.initialize({format : $state.current.data.type});
 
         MeasurementService.getAll()
             .success(function(data, status) {

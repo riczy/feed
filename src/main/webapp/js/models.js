@@ -6,15 +6,16 @@ feed.model.recipe = {
     TPR : "tpr"
 };
 
-feed.model.recipe.initialize = function (format) {
+feed.model.recipe.initialize = function (data) {
 
-    var obj = feed.model.recipe.create(format);
+    var data = data || {},
+        obj = feed.model.recipe.create(data);
 
-    if (format == feed.model.recipe.TPI) {
+    if (data.format == feed.model.recipe.TPI) {
         obj.createNewSection(2, 0, true, true, false);
         obj.createNewSection(2, 0, true, true, false);
         obj.createNewSection(0, 2, false, false, true);
-    } else if (format == feed.model.recipe.TPR) {
+    } else if (data.format == feed.model.recipe.TPR) {
         obj.createNewSection(2, 2, true, true, true);
         obj.createNewSection(2, 2, true, true, true);
     } else {
