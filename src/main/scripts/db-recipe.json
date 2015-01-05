@@ -1,0 +1,113 @@
+{
+  "_id": "54a9c8a903644fc8ec1a1061",
+  "format": "tpi",
+  "title": "Roasted Sweet Potato Tacos",
+  "createdDate": "Jan 4, 2015 6:11:37 PM",
+  "modifiedDate": "Jan 4, 2015 6:11:37 PM",
+  "serves": "4",
+  "authors": [
+    "Yvette White",
+    "David Wagoner"
+  ],
+  "sections": [
+    {
+      "title": "Roasted Vegetables",
+      "ingredients": [
+        {
+          "quantity": "3",
+          "item": "sweet potatoes"
+        },
+        {
+          "quantity": "2",
+          "item": "red onions"
+        },
+        {
+          "quantity": "1",
+          "measurement": "tablespoon",
+          "item": "extra-virgin olive oil"
+        },
+        {
+          "quantity": "1",
+          "measurement": "tablespoon",
+          "item": "chipotle chili powder"
+        },
+        {
+          "quantity": "2",
+          "measurement": "teaspoon",
+          "item": "ground coriander"
+        },
+        {
+          "quantity": "1",
+          "measurement": "teaspoon",
+          "item": "ground cumin"
+        },
+        {
+          "quantity": "1",
+          "measurement": "teaspoon",
+          "item": "salt"
+        }
+      ],
+      "steps": [],
+      "display": {
+        "showTitle": true,
+        "showIngredients": true,
+        "showSteps": false
+      }
+    },
+    {
+      "title": "Tacos",
+      "ingredients": [
+        {
+          "item": "roasted vegetables"
+        },
+        {
+          "quantity": "8",
+          "item": "whole wheat tortillas"
+        },
+        {
+          "quantity": "2",
+          "measurement": "tablespoon",
+          "item": "mayonnaise"
+        },
+        {
+          "item": "mayonnaise"
+        },
+        {
+          "quantity": "1/2",
+          "measurement": "cup",
+          "item": "aged cheddar cheese"
+        },
+        {
+          "item": "chipotle chili powder"
+        }
+      ],
+      "steps": [],
+      "display": {
+        "showTitle": true,
+        "showIngredients": true,
+        "showSteps": false
+      }
+    },
+    {
+      "ingredients": [],
+      "steps": [
+        {
+          "text": "Roast the vegetables"
+        },
+        {
+          "text": "Make the tacos"
+        }
+      ],
+      "display": {
+        "showTitle": false,
+        "showIngredients": false,
+        "showSteps": true
+      }
+    }
+  ],
+  "hashtags": [
+    "Tacos",
+    "Serves a Crowd",
+    "Sweet Potatoes"
+  ]
+}
