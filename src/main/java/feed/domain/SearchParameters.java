@@ -6,8 +6,8 @@ package feed.domain;
 public class SearchParameters {
 
     private String text;
-    private int limit;
-    private int skip;
+    private Integer pageSize;
+    private Integer page;
 
     public String getText() {
         return text;
@@ -17,19 +17,19 @@ public class SearchParameters {
         this.text = text;
     }
 
-    public int getLimit() {
-        return limit;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
-    public int getSkip() {
-        return skip;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setSkip(int skip) {
-        this.skip = skip;
+    public void setPage(Integer page) {
+        this.page = page;
     }
 }

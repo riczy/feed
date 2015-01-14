@@ -3,6 +3,7 @@ package feed.service;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBCursor;
 import com.mongodb.WriteConcern;
+import feed.domain.OrderByParameters;
 import feed.domain.SearchParameters;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import com.mongodb.util.JSON;
 
 import feed.domain.Recipe;
 
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -28,6 +30,8 @@ import java.util.List;
 public class RecipeService {
    
    protected final static Logger logger = LoggerFactory.getLogger(RecipeService.class.getName());
+   private final static int DEFAULT_SKIP = 0;
+   private final static int DEFAULT_LIMIT = 20;
    private final static RecipeService service;
    private DBCollection collection;
 
@@ -90,20 +94,56 @@ public class RecipeService {
    }
 
    /**
+    * Searches and returns recipe objects that match the criteria given.
+    * </p>
     *
-    * @param searchParameters
-    * @return
+    * @param   searchParameters The criteria used to find recipes. In addition,
+    *          paging information is provided here. If no paging information is
+    *          given then the default values are used. Required.
+    * @param   orderBy Information that indicates how the results should be
+    *          sorted. If null or empty then no explicit sorting is applied.
+    * @return  A collection of recipe objects that match the given criteria.
+    *          If no matches were found then an empty collection is returned.
     */
-   public List<Recipe> search(SearchParameters searchParameters) {
+   public List<Recipe> search(SearchParameters searchParameters, OrderByParameters orderBy) {
 
       ArrayList<Recipe> results = new ArrayList<>();
+      int limit = DEFAULT_LIMIT;
+      int skip = DEFAULT_SKIP;
 
-      // TODO: add limit & skip
-      DBObject query = new BasicDBObject("$text", new BasicDBObject("$search", searchParameters.getText()));
-      DBCursor cursor = collection.find(query);
+      if (searchParameters.getPageSize() != null && searchParameters.getPageSize() <= 0) {
+         limit = searchParameters.getPageSize();
+      }
+      if (searchParameters.getPage() != null && searchParameters.getPage() > 0) {
+         skip = (searchParameters.getPage() * limit) + 1;
+      }
+
+      DBObject query = new BasicDBObject();
+      if (searchParameters.getText() != null) {
+         query.put("$text", new BasicDBObject("$search", searchParameters.getText()));
+      }
+
+      DBObject sort = new BasicDBObject();
+      if (orderBy != null) {
+         Iterator<OrderByParameters.OrderByPair> iter = orderBy.iterator();
+         while (iter.hasNext()) {
+            OrderByParameters.OrderByPair pair = iter.next();
+            sort.put(pair.getColumn().getColumnName(), pair.getSortDirection().getDirection());
+         }
+      }
+
+      logger.debug("Query: {}", query);
+      logger.debug("Sort:  {}", sort);
+      logger.debug("Skip:  {}", skip);
+      logger.debug("Limit: {}", limit);
+
+      DBCursor cursor = collection.find(query).sort(sort).skip(skip).limit(limit);
       Iterator<DBObject> iterator = cursor.iterator();
+      int resultCount = 1;
       while (iterator.hasNext()) {
-         results.add(Recipe.toObject(iterator.next().toString()));
+         String recipeJson = iterator.next().toString();
+         logger.debug("Result {}: {}", resultCount++, recipeJson);
+         results.add(Recipe.toObject(recipeJson));
       }
       cursor.close();
 

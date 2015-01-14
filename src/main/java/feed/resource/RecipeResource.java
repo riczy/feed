@@ -1,7 +1,5 @@
 package feed.resource;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -14,10 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriBuilder;
 
+import feed.domain.OrderByParameters;
 import feed.domain.SearchParameters;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,29 +107,42 @@ public class RecipeResource {
     *
     * @param   text The search value that is used to find matching recipes.
     *          Required.
-    * @param   limit The maximum number of search results to return. A value
-    *          equal to or less than zero will bring back all results.
-    * @param   skip The number of matching results to skip. The skipped results
-    *          will not be included in the returned results.
+    * @param   page The set or page of results to return. For example:
+    *          A page == zero will return results 1 through pageSize. If
+    *          pageSize = 10, then results 1 - 10 are returned.
+    *          A page == 1 will return results (pageSize * page) + 1 through
+    *          (pageSize * page) + pageSize. If pageSize = 10, then results
+    *          11 - 20 are returned.
+    * @param   pageSize The maximum number of search results to return. A value
+    *          equal to or less than zero will bring back a default maximum
+    *          number of results.
+    * @param   sortBy Indicates how the results should be sorted. Possible
+    *          values are: titleAscending, titleDescending, createdDateAscending,
+    *          createdDateDescending, modifiedDateAscending,
+    *          modifiedDateDescending
     */
    @GET
    @Path("/search")
    public Response search(@QueryParam("text") String text,
-                          @QueryParam("limit") int limit,
-                          @QueryParam("skip") int skip) {
+                          @QueryParam("page") Integer page,
+                          @QueryParam("pageSize") Integer pageSize,
+                          @QueryParam("sortBy") String sortBy) {
 
       SearchParameters searchParameters = new SearchParameters();
-      searchParameters.setLimit(limit);
-      searchParameters.setSkip(skip);
+      searchParameters.setPageSize(pageSize);
+      searchParameters.setPage(page);
       searchParameters.setText(text);
 
+      OrderByParameters orderByParameters = new OrderByParameters();
+      orderByParameters.add(OrderByParameters.OrderByColumn.TITLE);
+
       try {
-         List<Recipe> results = RecipeService.getInstance().search(searchParameters);
+         List<Recipe> results = RecipeService.getInstance().search(searchParameters, orderByParameters);
          return Response.status(Status.CREATED).entity(results).build();
       } catch (Exception e) {
          logger.error("An error occurred while search for a recipe.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
    }
-   
+
 }
