@@ -19,7 +19,9 @@ feed.app.config(
                     controller: 'ErrorController'
                 }).
                 state('home', {
-                    url: '/'
+                    url: '/',
+                    templateUrl: 'partials/recipe-list.html',
+                    controller: 'HomeController'
                 }).
                 state('recipe-add', {
                     url: '/recipe/new',
@@ -117,4 +119,67 @@ feed.isEmpty = function(obj) {
    }
 
    return false;
+};
+/**
+* <p>Places an object of criteria into a url to be used for
+* search for resource items.</p>
+*
+* Examples:
+* resourceUrl = /app/r/rsrc
+* criteria = {} or null or undefined
+* return = /app/r/rsrc
+*
+* criteria = { status : [1, 3], name : "Henry" }
+* return = /app/r/rsrc?status=1&status=3&name=Henry
+*
+* criteria = { status : null }
+* return = /app/r/rsrc
+*
+* @param resourceUrl - {String} The url of the resource for which
+* this url is being expanded with search criteria. For
+* example: /app-name/r/resource-name. Required.
+* @param criteria - {Object} An object containing names and
+* values of the criteria to use for searching a resource.
+* For example: { status : [1, 3], name : "Henry" }
+* @return A url that combines the given resourceUrl and the criteria.
+*/
+feed.asSearchUri = function(resourceUrl, criteria) {
+    var key, value, temp, i,
+        hasInitialCriterion = false,
+        url = resourceUrl,
+        criteria = criteria || {};
+
+    for (key in criteria) {
+        temp = "";
+        value = criteria[key];
+        if (!feed.isNone(value)) {
+            if (typeof value === 'object' && value instanceof Array && value.length > 0) {
+                /*
+                * MULTIPLE VALUES SEPARATED BY ","; THIS WAY IS NOT BEING HANDLED BY REST.
+                for (i = 0; i < value.length; i++) {
+                if (i > 0) temp += ",";
+                temp += encodeURIComponent(value[i]);
+                }
+                if (!feed.isEmpty(temp)) temp = key + "=" + temp;
+                */
+                for (i = 0; i < value.length; i++) {
+                    if (i > 0) temp += "&";
+                    temp += (key + "=" + encodeURIComponent(value[i]));
+                }
+            }
+            else {
+                temp = key + "=" + encodeURIComponent(value);
+            }
+            if (!feed.isEmpty(temp)) {
+                if (!hasInitialCriterion) {
+                    url += "?" + temp;
+                    hasInitialCriterion = true;
+                }
+                else {
+                    url += "&" + temp;
+                }
+            }
+        }
+    }
+    return url;
 };

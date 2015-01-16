@@ -111,26 +111,15 @@ public class RecipeService {
       int limit = DEFAULT_LIMIT;
       int skip = DEFAULT_SKIP;
 
-      if (searchParameters.getPageSize() != null && searchParameters.getPageSize() <= 0) {
+      if (searchParameters.getPageSize() != null && searchParameters.getPageSize() > 0) {
          limit = searchParameters.getPageSize();
       }
       if (searchParameters.getPage() != null && searchParameters.getPage() > 0) {
-         skip = (searchParameters.getPage() * limit) + 1;
+         skip = (searchParameters.getPage() - 1) * limit;
       }
 
-      DBObject query = new BasicDBObject();
-      if (searchParameters.getText() != null) {
-         query.put("$text", new BasicDBObject("$search", searchParameters.getText()));
-      }
-
-      DBObject sort = new BasicDBObject();
-      if (orderBy != null) {
-         Iterator<OrderByParameters.OrderByPair> iter = orderBy.iterator();
-         while (iter.hasNext()) {
-            OrderByParameters.OrderByPair pair = iter.next();
-            sort.put(pair.getColumn().getColumnName(), pair.getSortDirection().getDirection());
-         }
-      }
+      DBObject query = this.createQueryObject(searchParameters);
+      DBObject sort = this.createOrderByObject(orderBy);
 
       logger.debug("Query: {}", query);
       logger.debug("Sort:  {}", sort);
@@ -148,6 +137,34 @@ public class RecipeService {
       cursor.close();
 
       return results;
+   }
+
+   public long count(SearchParameters criteria) {
+
+      DBObject query = this.createQueryObject(criteria);
+      return collection.count(query);
+   }
+
+   private DBObject createQueryObject(SearchParameters criteria) {
+
+      DBObject query = new BasicDBObject();
+      if (criteria.getText() != null) {
+         query.put("$text", new BasicDBObject("$search", criteria.getText()));
+      }
+      return query;
+   }
+
+   private DBObject createOrderByObject(OrderByParameters orderBy) {
+
+      DBObject sort = new BasicDBObject();
+      if (orderBy != null) {
+         Iterator<OrderByParameters.OrderByPair> iter = orderBy.iterator();
+         while (iter.hasNext()) {
+            OrderByParameters.OrderByPair pair = iter.next();
+            sort.put(pair.getColumn().getColumnName(), pair.getSortDirection().getDirection());
+         }
+      }
+      return sort;
    }
 
 }

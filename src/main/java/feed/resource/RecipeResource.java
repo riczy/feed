@@ -133,16 +133,57 @@ public class RecipeResource {
       searchParameters.setPage(page);
       searchParameters.setText(text);
 
-      OrderByParameters orderByParameters = new OrderByParameters();
-      orderByParameters.add(OrderByParameters.OrderByColumn.TITLE);
+      OrderByParameters orderByParameters = createOrderByParameters(sortBy);
 
       try {
          List<Recipe> results = RecipeService.getInstance().search(searchParameters, orderByParameters);
-         return Response.status(Status.CREATED).entity(results).build();
+         return Response.status(Status.OK).entity(results).build();
       } catch (Exception e) {
          logger.error("An error occurred while search for a recipe.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
+   }
+
+   @GET
+   @Path("/search/count")
+   public Response count(@QueryParam("text") String text) {
+
+      SearchParameters searchParameters = new SearchParameters();
+      searchParameters.setText(text);
+
+      try {
+         Long resultsCount = RecipeService.getInstance().count(searchParameters);
+         return Response.status(Status.OK).entity(resultsCount).build();
+      } catch (Exception e) {
+         logger.error("An error occurred while search for a recipe.", e);
+         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+      }
+   }
+
+   /**
+    *
+    * @param   sortByQueryParam
+    * @return
+    */
+   private OrderByParameters createOrderByParameters(String sortByQueryParam) {
+
+      OrderByParameters orderByParameters = new OrderByParameters();
+
+      if ("createdDateAscending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.CREATED_DATE, OrderByParameters.SortDirection.ASC);
+      } else if ("createdDateDescending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.CREATED_DATE, OrderByParameters.SortDirection.DESC);
+      } else if ("modifiedDateAscending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.MODIFIED_DATE, OrderByParameters.SortDirection.ASC);
+      } else if ("modifiedDateDescending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.MODIFIED_DATE, OrderByParameters.SortDirection.DESC);
+      } else if ("titleAscending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.TITLE, OrderByParameters.SortDirection.ASC);
+      } else if ("titleDescending".equalsIgnoreCase(sortByQueryParam)) {
+         orderByParameters.add(OrderByParameters.OrderByColumn.TITLE, OrderByParameters.SortDirection.DESC);
+      }
+
+      return orderByParameters;
    }
 
 }

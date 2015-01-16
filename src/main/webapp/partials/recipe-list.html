@@ -1,7 +1,14 @@
 <div ng-show="!results || results.length == 0">
-    No matching search results were found.
+    No recipes were found.
 </div>
-<div ng-repeat="recipe in results" ng-show="results && results.length > 0">
-    <a ng-href="#/recipe/{{recipe.id}}">{{recipe.title}}</a>
-    <p>{{recipe.description}}</p>
+<div>
+    <div ng-repeat="recipe in results" ng-show="results && results.length > 0">
+        <a ng-href="#/recipe/{{recipe.id}}">{{recipe.title}}</a>
+        <div>Added {{recipe.createdDate | date : 'medium' }} by {{recipe.author || Unknown}}</div>
+        <p>{{recipe.description}}</p>
+    </div>
+    <div>
+        <button type="button" class="btn btn-link" ng-enabled="canGoPrevious()" ng-click="previous()">Previous</button>
+        <button type="button" class="btn btn-link" ng-enabled="canGoNext()" ng-click="next()">Next</button>
+    </div>
 </div>

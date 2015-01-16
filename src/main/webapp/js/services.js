@@ -26,11 +26,19 @@ feed.app.factory('RecipeService',
             },
             /* Searches for recipes containing the given text.
              *
-             * @param   text {String} The free text value for searching. Required.
+             * @param   criteria {Object} The criteria for searching. Required.
              */
-            search : function(text) {
-                var queryParams = "text=" + encodeURI(text);
-                return $http.get(resourceUrl + "/search?" + queryParams);
+            search : function(criteria) {
+                var url = feed.asSearchUri(resourceUrl + "/search", criteria);
+                return $http.get(url);
+            },
+            /* Searches for recipes containing the given text.
+             *
+             * @param   criteria {Object} The criteria for searching. Required.
+             */
+            count : function(criteria) {
+                var url = feed.asSearchUri(resourceUrl + "/search/count", criteria);
+                return $http.get(url);
             },
             /* Finds the recipe object that is identified by the id given.
              *
