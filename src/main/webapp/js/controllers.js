@@ -1,18 +1,19 @@
-feed.app.controller('NavController', ['$scope', '$location', 'RecipeService', 'ErrorService',
-    function ($scope, $location, RecipeService, ErrorService) {
+feed.app.controller('NavController', ['$scope', '$state', 'RecipeService', 'ErrorService',
+    function ($scope, $state, RecipeService, ErrorService) {
 
         $scope.text = "";
 
         $scope.search = function () {
             if ($scope.text) {
-                $location.url("recipe/search?text="+$scope.text);
+                $state.go("recipe-search", {text : $scope.text});
+
             }
         }
     }
 ]);
 
-feed.app.controller('HomeController', ['$scope', '$location', 'RecipeService', 'ErrorService',
-    function ($scope, $location, RecipeService, ErrorService) {
+feed.app.controller('HomeController', ['$scope', '$state', 'RecipeService', 'ErrorService',
+    function ($scope, $state, RecipeService, ErrorService) {
 
         $scope.results = [];
         $scope.resultsCount = 0;
@@ -30,7 +31,7 @@ feed.app.controller('HomeController', ['$scope', '$location', 'RecipeService', '
                 .error(function (data, status) {
                     ErrorService.setTitle("An error occurred when fetching the recipes.");
                     ErrorService.setMessage(data);
-                    $location.path("/error");
+                    $state.go("error");
                 });
         };
 
@@ -47,20 +48,12 @@ feed.app.controller('HomeController', ['$scope', '$location', 'RecipeService', '
                 .error(function (data, status) {
                     ErrorService.setTitle("An error occurred when fetching the recipes.");
                     ErrorService.setMessage(data);
-                    $location.path("/error");
+                    $state.go("error");
                 });
         };
 
-        getCurrentPageMin = function() {
-            return ((page - 1) * pageSize) + 1;
-        };
-
-        getCurrentPageMax = function() {
-            return page * pageSize;
-        };
-
         $scope.canGoNext = function() {
-            return $scope.resultsCount >= getCurrentPageMax() + 1;
+            return $scope.resultsCount >= (page * pageSize) + 1;
         };
 
         $scope.canGoPrevious = function() {
@@ -82,7 +75,7 @@ feed.app.controller('HomeController', ['$scope', '$location', 'RecipeService', '
         };
 
         $scope.view = function(id) {
-            $location.path("recipe/" + id);
+            $state.go("recipe-view", {id : id});
         };
 
         fetchResultsCount();
@@ -91,12 +84,11 @@ feed.app.controller('HomeController', ['$scope', '$location', 'RecipeService', '
     }
 ]);
 
-feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$location', 'RecipeService', 'ErrorService',
-    function ($scope, $stateParams, $location, RecipeService, ErrorService) {
+feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$state', 'RecipeService', 'ErrorService',
+    function ($scope, $stateParams, $state, RecipeService, ErrorService) {
 
         $scope.results = [];
 
-// todo: changed from $stateParams.text. not working though. what is  in $dtateParams?
         RecipeService
             .search($stateParams)
             .success(function (data, status) {
@@ -105,17 +97,18 @@ feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$locat
             .error(function (data, status) {
                 ErrorService.setTitle("An error occurred when searching for recipes.");
                 ErrorService.setMessage(data);
-                $location.path("/error");
+                $state.go("error");
             });
+
         $scope.view = function(id) {
-            $location.path("recipe/" + id);
+            $state.go("recipe-view", {id : id});
         };
 
     }
 ]);
 
-feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'RecipeService', 'MeasurementService', 'ErrorService',
-    function ($scope, $state, $location, RecipeService, MeasurementService, ErrorService) {
+feed.app.controller('RecipeAddController', ['$scope', '$state', 'RecipeService', 'MeasurementService', 'ErrorService',
+    function ($scope, $state, RecipeService, MeasurementService, ErrorService) {
 
         $scope.recipe = feed.model.recipe.initialize({format : $state.current.data.type});
 
@@ -151,7 +144,7 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'Re
                 .error(function (data, status) {
                     ErrorService.setTitle("An error occurred when saving the recipe.");
                     ErrorService.setMessage(data);
-                    $location.path("/error");
+                    $state.go("error");
                 });
         };
     }
@@ -159,13 +152,13 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', '$location', 'Re
 
 feed.app.controller('RecipeEditController', ['$scope', '$stateParams',
     function ($scope, $stateParams) {
-        $scope.pageTitle = "Recipe " + $stateParams.id;
 
+        $scope.pageTitle = "Recipe " + $stateParams.id;
     }
 ]);
 
-feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$location', 'RecipeService', 'ErrorService',
-    function ($scope, $stateParams, $location, RecipeService, ErrorService) {
+feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$state', 'RecipeService', 'ErrorService',
+    function ($scope, $stateParams, $state, RecipeService, ErrorService) {
 
         $scope.recipe = {};
 
@@ -177,7 +170,7 @@ feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$locatio
             .error(function (data, status) {
                 ErrorService.setTitle("An error occurred when searching for the recipe.");
                 ErrorService.setMessage(data);
-                $location.path("/error");
+                $state.go("error");
             });
 
     }
@@ -189,5 +182,5 @@ feed.app.controller('ErrorController', [ '$scope', 'ErrorService',
         $scope.title = ErrorService.getTitle();
         $scope.message = ErrorService.getMessage();
         ErrorService.reset();
-   }
+    }
 ]);
