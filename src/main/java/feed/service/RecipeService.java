@@ -1,6 +1,5 @@
 package feed.service;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.DBCursor;
 import com.mongodb.WriteConcern;
 import feed.domain.OrderByParameters;
@@ -17,7 +16,6 @@ import com.mongodb.util.JSON;
 
 import feed.domain.Recipe;
 
-import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -128,17 +126,26 @@ public class RecipeService {
 
       DBCursor cursor = collection.find(query).sort(sort).skip(skip).limit(limit);
       Iterator<DBObject> iterator = cursor.iterator();
-      int resultCount = 1;
+      int resultCount = 0;
       while (iterator.hasNext()) {
          String recipeJson = iterator.next().toString();
-         logger.debug("Result {}: {}", resultCount++, recipeJson);
+         logger.trace("Result {}: {}", ++resultCount, recipeJson);
          results.add(Recipe.toObject(recipeJson));
       }
       cursor.close();
+      logger.debug("Results Count: {}", resultCount);
 
       return results;
    }
 
+   /**
+    * Returns the number of documents that match the given criteria.
+    * </p>
+    *
+    * @param   criteria The criteria used to find recipes. Required.
+    * @return  An integer that indicates how many documents match the given
+    *          criteria.
+    */
    public long count(SearchParameters criteria) {
 
       DBObject query = this.createQueryObject(criteria);
