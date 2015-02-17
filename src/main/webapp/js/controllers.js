@@ -107,10 +107,10 @@ feed.app.controller('RecipeSearchController', ['$scope', '$stateParams', '$state
     }
 ]);
 
-feed.app.controller('RecipeAddController', ['$scope', '$state', 'RecipeService', 'MeasurementService', 'ErrorService',
-    function ($scope, $state, RecipeService, MeasurementService, ErrorService) {
+feed.app.controller('RecipeAddController', ['$scope', '$state', '$stateParams', 'RecipeService', 'MeasurementService', 'ErrorService',
+    function ($scope, $state, $stateParams, RecipeService, MeasurementService, ErrorService) {
 
-        $scope.recipe = feed.model.recipe.initialize({format : $state.current.data.type});
+        var editMode = !feed.isEmpty($stateParams.id);
 
         MeasurementService.getAll()
             .success(function(data, status) {
@@ -147,13 +147,20 @@ feed.app.controller('RecipeAddController', ['$scope', '$state', 'RecipeService',
                     $state.go("error");
                 });
         };
-    }
-]);
 
-feed.app.controller('RecipeEditController', ['$scope', '$stateParams',
-    function ($scope, $stateParams) {
-
-        $scope.pageTitle = "Recipe " + $stateParams.id;
+        if (editMode) {
+            RecipeService.fetch($stateParams.id)
+                .success(function(data, status) {
+                    $scope.recipe = feed.model.recipe.create(data);
+                })
+                .error(function(data, status) {
+                    ErrorService.setTitle("An error occurred when fetching the recipe.");
+                    ErrorService.setMessage(data);
+                    $state.go("error");
+                })
+        } else {
+            $scope.recipe = feed.model.recipe.initialize({format : $state.current.data.type});
+        }
     }
 ]);
 
@@ -172,6 +179,13 @@ feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$state',
                 ErrorService.setMessage(data);
                 $state.go("error");
             });
+
+        $scope.edit = function() {
+            $state.go("recipe-edit", {id : $stateParams.id});
+        };
+
+        $scope.delete = function() {
+        };
 
     }
 ]);

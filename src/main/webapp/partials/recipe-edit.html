@@ -22,15 +22,15 @@
             <h3>Ingredients</h3>
             <ul ui-sortable class="row sortable-list" ng-model="section.ingredients">
                 <li ng-repeat="ingredient in section.ingredients" ng-init="ingredientIndex = $index">
-                    <input class="col-sm-2 col-md-2" type="text" ng-model="ingredient.quantity" placeholder="Qty"
+                    <input class=" form-control col-sm-2 col-md-2" type="text" ng-model="ingredient.quantity" placeholder="Qty"
                            id="quantity-{{sectionIndex}}-{ingredientIndex}}">
-                    <select class="col-sm-3 col-md-3" ng-model="ingredient.measurement" ng-options="m.name as m.name for m in measurements" id="measurement-{{sectionIndex}}-{ingredientIndex}}">
+                    <select class="form-control col-sm-3 col-md-3" ng-model="ingredient.measurement" ng-options="m.name as m.name for m in measurements" id="measurement-{{sectionIndex}}-{ingredientIndex}}">
                         <option value=""></option>
                     </select>
-                    <input  class="col-sm-6 col-md-6" type="text" ng-model="ingredient.item" placeholder="Ingredient"
+                    <input  class="form-control col-sm-6 col-md-6" type="text" ng-model="ingredient.item" placeholder="Ingredient"
                            id="ingredient-{{sectionIndex}}-{ingredientIndex}}">
                     <div class="col-sm-1 col-md-1">
-                        <button type="button" class="btn btn-default btn-sm"
+                        <button type="button" class="form-control btn btn-default btn-sm"
                                 ng-click="removeIngredient(sectionIndex, ingredientIndex)" title="Remove">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>

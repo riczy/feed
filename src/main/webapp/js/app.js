@@ -55,7 +55,7 @@ feed.app.config(
                 state('recipe-edit', {
                     url: '/recipe/{id}/edit',
                     templateUrl: 'partials/recipe-edit.html',
-                    controller: 'RecipeEditController'
+                    controller: 'RecipeAddController'
                 }).
                 state('recipe-view', {
                     url: '/recipe/{id}',
