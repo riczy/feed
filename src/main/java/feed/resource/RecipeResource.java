@@ -3,6 +3,7 @@ package feed.resource;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -75,7 +76,7 @@ public class RecipeResource {
    }
 
    /**
-    * Returns the recipe instance that is uniquely identified by the give id.
+    * Returns the recipe instance that is uniquely identified by the given id.
     * If no matching instance exists then null is returned.
     * </p>
     * 
@@ -98,6 +99,20 @@ public class RecipeResource {
          logger.error("An error occurred while creating a recipe.", e);
          return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
       }
+   }
+
+   /**
+    * Deletes the recipe instance identified by the given id.
+    *
+    * @param   id The unique id of the recipe instance to delete. Required.
+    * @return  A no content response.
+    */
+   @DELETE
+   @Path("/{id}")
+   public Response delete(@PathParam("id") String id) {
+
+      RecipeService.getInstance().delete(id);
+      return Response.noContent().build();
    }
 
    /**

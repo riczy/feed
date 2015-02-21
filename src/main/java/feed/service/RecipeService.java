@@ -139,6 +139,19 @@ public class RecipeService {
    }
 
    /**
+    * Deletes the recipe that is uniquely identified by the given id.
+    *
+    * @param   id The value that uniquely identifies the recipe to be deleted.
+    * @return  true if the delete was successful and false if not.
+    */
+   public boolean delete(String id) {
+
+      WriteResult result = collection.remove(new BasicDBObject("_id", id), WriteConcern.ACKNOWLEDGED);
+      logger.debug("The result of Recipe #{} delete: {}", id, result);
+      return true;
+   }
+
+   /**
     * Returns the number of documents that match the given criteria.
     * </p>
     *

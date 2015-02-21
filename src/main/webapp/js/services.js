@@ -24,6 +24,14 @@ feed.app.factory('RecipeService',
             update : function(recipeObj) {
                 return $http.put(resourceUrl, recipeObj);
             },
+            /* Deletes an existing recipe.
+             *
+             * @param   id {String} The unique id of the recipe to delete.
+             * @return  The promise object of the http ajax call.
+             */
+            delete : function(recipeId) {
+                return $http.delete(resourceUrl + "/" + recipeId);
+            },
             /* Searches for recipes containing the given text.
              *
              * @param   criteria {Object} The criteria for searching. Required.

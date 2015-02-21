@@ -185,6 +185,16 @@ feed.app.controller('RecipeViewController', ['$scope', '$stateParams', '$state',
         };
 
         $scope.delete = function() {
+            RecipeService
+                .delete($stateParams.id)
+                .success(function(data, status) {
+                    $state.go("home");
+                })
+                .error(function (data, status) {
+                    ErrorService.setTitle("An error occurred when deleting a recipe.");
+                    ErrorService.setMessage(data);
+                    $state.go("error");
+                });
         };
 
     }
