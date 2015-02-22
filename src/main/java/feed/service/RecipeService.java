@@ -24,6 +24,11 @@ import java.util.List;
 /**
  * The service manager for handling persistence for recipe objects.
  * </p>
+ *
+ * Use the #getInstance method to obtain a instance for making calls to the
+ *
+ * service.
+ * </p>
  */
 public class RecipeService {
    
@@ -36,7 +41,12 @@ public class RecipeService {
    static {
       service = new RecipeService();
    }
-   
+
+   /**
+    * Returns an instance of this Recipe service.
+    *
+    * @return  A recipe service instance.
+    */
    public static RecipeService getInstance() {
       return service;
    }
@@ -119,21 +129,21 @@ public class RecipeService {
       DBObject query = this.createQueryObject(searchParameters);
       DBObject sort = this.createOrderByObject(orderBy);
 
-      logger.debug("Query: {}", query);
-      logger.debug("Sort:  {}", sort);
-      logger.debug("Skip:  {}", skip);
-      logger.debug("Limit: {}", limit);
+      logger.debug("Search Query: {}", query);
+      logger.debug("Search Sort:  {}", sort);
+      logger.debug("Search Skip:  {}", skip);
+      logger.debug("Search Limit: {}", limit);
 
       DBCursor cursor = collection.find(query).sort(sort).skip(skip).limit(limit);
       Iterator<DBObject> iterator = cursor.iterator();
       int resultCount = 0;
       while (iterator.hasNext()) {
          String recipeJson = iterator.next().toString();
-         logger.trace("Result {}: {}", ++resultCount, recipeJson);
+         logger.trace("Search Result {}: {}", ++resultCount, recipeJson);
          results.add(Recipe.toObject(recipeJson));
       }
       cursor.close();
-      logger.debug("Results Count: {}", resultCount);
+      logger.debug("Search Results Count: {}", resultCount);
 
       return results;
    }
@@ -165,15 +175,35 @@ public class RecipeService {
       return collection.count(query);
    }
 
+   /**
+    * Creates the object that establishes the query criteria for matching
+    * recipe records.
+    * </p>
+    *
+    * @param   criteria The search criteria from which the query object is
+    *          built. Required.
+    * @return  The db object specifying the given criteria.
+    */
    private DBObject createQueryObject(SearchParameters criteria) {
 
       DBObject query = new BasicDBObject();
-      if (criteria.getText() != null) {
-         query.put("$text", new BasicDBObject("$search", criteria.getText()));
+      if (criteria != null) {
+         if (criteria.getText() != null) {
+            query.put("$text", new BasicDBObject("$search", criteria.getText()));
+         }
       }
       return query;
    }
 
+   /**
+    * Creates the object that establishes the ordering when searching for
+    * recipe records.
+    * </p>
+    *
+    * @param   orderBy The sort criteria from which the ordering of the
+    *          results will be build.
+    * @return  The db object specifying the given sort criteria.
+    */
    private DBObject createOrderByObject(OrderByParameters orderBy) {
 
       DBObject sort = new BasicDBObject();
